@@ -8,6 +8,7 @@ set :repo_url, "git@github.com:anthony21/Platform.git"
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
 
 # Default deploy_to directory is /var/www/my_app_name
+set :deploy_to, "/home/deploy/#{fetch :application}"
 
 set :branch, "main"
 
