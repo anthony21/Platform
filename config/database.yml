@@ -4,7 +4,7 @@ default: &default
   adapter: mysql2
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  url: <%= ENV.fetch("DATABASE_URL", "mysql2://deploy@localhost")
+  url: <%= ENV.fetch("DATABASE_URL", "mysql2://deploy@localhost") %>
 
 development:
   <<: *default
