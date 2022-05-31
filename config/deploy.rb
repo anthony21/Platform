@@ -9,7 +9,7 @@ set :repo_url, "git@github.com:anthony21/Platform.git"
 
 # Default deploy_to directory is /var/www/my_app_name
 
-set :deploy_to, "main"
+set :branch, "main"
 
 
 # Default value for :format is :airbrussh.
