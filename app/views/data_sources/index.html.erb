@@ -1,0 +1,13 @@
+<%= title t('data_sources.title') %>
+
+<%= tables_table do |table| %>
+  <%= table.header_cell name: t('views.table.name'), classes: 'w-full' %>
+
+  <% @data_sources.each do |data_source| %>
+    <%= table.row url: [data_source].compact do |row| %>
+      <%= row.cell classes: 'truncate' do %>
+        <%= data_source.name %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

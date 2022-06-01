@@ -1,0 +1,114 @@
+<%= title @account.name %>
+
+<%= content_for :navigation_actions do %>
+  <%= button(
+    text: t('accounts.buttons.users'),
+    url: [@account, :users],
+    icon: 'users',
+    classes: 'mr-2'
+  ) %>
+  <%= button(
+    text: t('accounts.buttons.edit'),
+    url: [:edit, @account],
+    icon: 'pencil',
+    classes: 'mr-2'
+  ) %>
+  <% if Feature.enabled? :account_management %>
+    <%= button(
+      text: t('accounts.buttons.add_records'),
+      url: [:new, @account, :record_transaction],
+      icon: 'file-plus',
+      classes: 'mr-2'
+    ) %>
+  <% else %>
+    <%= button(
+      text: t('accounts.buttons.billing'),
+      url: [:billing, @account],
+      icon: 'file-invoice-dollar',
+      classes: 'mr-2'
+    ) %>
+  <% end %>
+  <%= button(
+    text: t('audits.history'),
+    url: [:history, @account],
+    icon: 'clock-rotate-left'
+  ) %>
+<% end %>
+
+<% if Feature.enabled? :account_management %>
+  <%= cards_card do %>
+    <%= detail name: t('accounts.available_records') do %>
+      <%= number_with_delimiter(@account.available_records) %> / <%= number_with_delimiter(@account.total_records) %>
+    <% end %>
+
+    <%= detail url: [@account, :products] do %>
+      <div class="flex items-center font-semibold text-gray-600 dark:text-gray-300">
+        <%= icon name: 'screen-users', class: 'w-6 h-6 mr-3 text-blue' %>
+        <%= t('products.title') %>
+      </div>
+    <% end %>
+
+    <%= detail url: [@account, :lists] do %>
+      <div class="flex items-center font-semibold text-gray-600 dark:text-gray-300">
+        <%= icon name: 'address-card', class: 'w-6 h-6 mr-3 text-green' %>
+        <%= t('lists.title') %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <div class="mt-12">
+    <h2 class="text-center text-lg mb-2 font-bold"><%= t('record_transactions.title') %></h2>
+
+    <%= tables_table do |table| %>
+      <%= table.header_cell name: t('views.table.date') %>
+      <%= table.header_cell name: t('views.table.record_count') %>
+
+      <% @account.record_transactions.order(created_at: :desc).each do |record_transaction| %>
+        <%= table.row url: [@account, record_transaction].compact do |row| %>
+          <%= row.cell do %>
+            <%= local_time(record_transaction.created_at, '%m/%d/%y %l:%M %p') %>
+          <% end %>
+
+          <%= row.cell do %>
+            +<%= number_with_delimiter(record_transaction.record_count) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <%= cards_card(
+    title: t('users.views.api'),
+    icon: 'cloud-bolt',
+    color: :orange,
+    classes: 'flex-1 max-w-lg mt-4 lg:mt-0'
+  ) do %>
+    <div data-controller="clipboard" data-clipboard-success-content=<%= t('users.buttons.copy.copied') %>>
+      <div class="mb-2 flex items-center pr-6">
+        <div class="leading-5 text-gray-700 dark:text-gray-300 font-semibold">
+          <label class="block" for="key"><%= t('users.views.api_key') %></label>
+        </div>
+      </div>
+      <input
+        readonly
+        id="key"
+        type="text"
+        value="<%= Current.account.api_token %>"
+        data-clipboard-target="source"
+        class="<%= class_string(field_classes) %>"
+      />
+
+      <div class="mt-6 text-right">
+        <%= button(
+          text: t('users.buttons.copy.clipboard'),
+          icon: 'clipboard',
+          type: 'button',
+          data: {
+            action: 'clipboard#copy',
+            'clipboard-target': 'button'
+          }
+        ) %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

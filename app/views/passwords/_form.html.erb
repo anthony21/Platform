@@ -1,0 +1,38 @@
+<%= title locals[:title] %>
+
+<%= unauthenticated_page(title: locals[:title]) do |c| %>
+  <%= form_with model: @user, url: url do |f| %>
+    <%= f.hidden_field :reset_password_token %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :password,
+        field_type: :password,
+        label: password_label,
+        autofocus: true,
+        autocomplete: 'new-password'
+      ) %>
+    <% end %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :password_confirmation,
+        field_type: :password,
+        label: confirm_password_label,
+        autocomplete: 'new-password'
+      ) %>
+    <% end %>
+
+    <div class="mt-6">
+      <%= button(
+        text: submit_button_text,
+        type: :submit,
+        color: :blue,
+        classes: 'w-full',
+        show_loading: true
+      ) %>
+    </div>
+  <% end %>
+<% end %>

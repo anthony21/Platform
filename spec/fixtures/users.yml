@@ -1,0 +1,58 @@
+super_admin:
+  account: urban_outlets
+  first_name: Michael 
+  last_name: Duvenary
+  email: mduvenary@gmail.com
+  password_digest: <%= BCrypt::Password.create('testtest') %>
+  role: 1
+  features: >
+    {
+      "account_management": true,
+      "super_admin": true
+    }
+
+account_manager:
+  account: urban_outlets
+  core_user: account_manager
+  first_name: Account
+  last_name: Manager
+  email: account.manager@urbanoutlets.com
+  password_digest: <%= BCrypt::Password.create('testtest') %>
+  role: 1
+  features: >
+    {
+      "account_management": true,
+      "shipments": true
+    }
+
+admin:
+  account: acme
+  core_user: acme
+  first_name: John
+  last_name: Smith
+  email: john@test.com
+  password_digest: <%= BCrypt::Password.create('testtest') %>
+  role: 1
+  features: >
+    {
+      "account_admin": true,
+      "campaigns": true,
+      "ping": true
+    }
+
+user:
+  account: acme
+  first_name: Jane
+  last_name: Smith
+  email: jane@test.com
+  password_digest: <%= BCrypt::Password.create('testtest') %>
+  role: 0
+
+anakin:
+  account: empire
+  first_name: Anakin
+  last_name: Skywalker
+  email: anakin@test.com
+  password_digest: <%= BCrypt::Password.create('testtest') %>
+  role: 1
+  core_user: anakin

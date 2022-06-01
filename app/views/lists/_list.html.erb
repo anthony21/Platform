@@ -1,0 +1,49 @@
+<%= turbo_frame_tag list, target: '_top' do %>
+  <%= turbo_stream_from list %>
+
+  <%= content_for :navigation_actions do %>
+    <%= turbo_frame_tag dom_id(list, :navigation_actions), target: :_top do %>
+      <%= lists_navigation_actions list: list %>
+    <% end %>
+  <% end %>
+
+  <div class="lg:max-w-none xl:flex xl:space-x-6">
+    <%= cards_card(
+      title: t('lists.views.details'),
+      icon: 'address-card',
+      color: 'green',
+      classes: 'flex-1 max-w-lg'
+    ) do %>
+      <%= lists_details list: list, account: account %>
+
+      <% if list.uploaded? %>
+        <%= link_to(
+          [account, list].compact,
+          method: 'delete',
+          data: {
+            confirm: t('lists.destroy_confirmation', name: list.name)
+          },
+          class: 'mt-8 flex items-center justify-center text-red hover:bg-red hover:text-gray-900 active:bg-red-dark py-2 rounded-lg'
+        ) do %>
+          <%= icon name: 'trash', class: 'h-4' %>
+          <span class="ml-2"><%= t('lists.buttons.delete') %></span>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if list.audience.present? %>
+      <%= cards_card(
+        title: t('lists.views.selections'),
+        icon: 'screen-users',
+        color: 'blue',
+        classes: 'flex-1 mt-4 xl:mt-0 max-w-lg'
+      ) do %>
+        <%= detail name: t('lists.views.audience'), url: [account, list.audience].compact do %>
+          <%= list.audience.name %>
+        <% end %>
+
+        <%= countables_selections countable: list %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

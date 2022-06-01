@@ -1,16 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full <%= Current.user&.theme || 'sync' %>">
   <head>
-    <title>Platform</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><%= content_for?(:page_title) ? "#{sanitize(content_for(:page_title))}" : 'Urban Outlets' %></title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="turbo-cache-control" content="no-cache">
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+    <%= stylesheet_link_tag 'nouislider', media: 'all' %>
+
+    <%= stylesheet_link_tag 'tailwind', media: 'all' %>
+
     <%= javascript_importmap_tags %>
+
+    <script src="//cdn.amcharts.com/lib/4/core.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/charts.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/themes/animated.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/themes/dark.js"></script>
+    <script src="//cdn.amcharts.com/lib/4/plugins/sliceGrouper.js"></script> 
+
+    <% if Rails.env.test? %>
+      <%= render 'disable_animations' %>
+    <% end %>
+
+   <%= favicon_link_tag asset_path('uop.png') %>
+
+    <%= render 'theme_watcher' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="subpixel-antialiased h-full dark:text-gray-200 <%= Current.user ? 'bg-gray-100 dark:bg-gray-900' : 'bg-white dark:bg-gray-900' %>" data-controller="hidden event">
+    <% if Current.user %>
+      <%= render 'application_shell' %>
+    <% else %>
+      <%= yield %>
+    <% end %>
+
+    <!-- version: <%= Current.version %>, revision: <%= Current.revision %> -->
   </body>
 </html>

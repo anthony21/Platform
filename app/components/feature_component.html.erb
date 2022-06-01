@@ -1,0 +1,7 @@
+<% if enabled? %>
+  <%= content %>
+<% else %>
+  <div class="hidden" data-controller="feature" data-feature-feature-value="<%= @feature %>">
+    <%= content %>
+  </div>
+<% end %>

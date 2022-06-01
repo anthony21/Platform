@@ -1,0 +1,110 @@
+<%= title t('users.settings') %>
+
+<div class="max-w-lg">
+  <%= cards_card title: t('users.views.edit_profile'), icon: 'user-pen', color: :indigo, classes: 'flex-1 mb-8' do %>
+    <%= form_with model: Current.user, url: update_profile_path, data: { turbo: false }, html: { method: :put } do |form| %>
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :first_name,
+          label: t('users.views.first_name'),
+          required: true
+        ) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :last_name,
+          label: t('users.views.last_name'),
+          required: true
+        ) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :email,
+          label: t('users.views.email_address'),
+          required: true
+        ) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_dropdown_field(
+          form: form,
+          field: :theme,
+          options: [['Sync with system settings', 'sync'], %w(Dark dark), %w(Light light)],
+          label: t('users.views.theme')
+        ) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_label form: form, field: :avatar, label: t('users.views.profile_pic') %>
+        <p class="text-sm"> <%= t('users.views.change_profile_pic') %> <%= link_to 'Gravatar.com', 'https://gravatar.com', target: '_blank', class: 'text-blue hover:underline' %>.
+      <% end %>
+
+      <div class="mt-6 text-right">
+        <%= button(
+          text: t('users.buttons.update_profile'),
+          type: 'submit',
+          color: :green,
+          show_loading: true,
+          icon: 'check'
+        ) %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%= cards_card(
+    title: t('users.views.change_password'),
+    icon: 'user-lock',
+    color: :purple,
+    classes: 'flex-1 mt-4 mb-8 lg:mt-0'
+  ) do %>
+    <%= form_with model: Current.user, url: update_profile_path, html: { method: :put } do |form| %>
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :password,
+          field_type: :password,
+          label: t('users.views.new_password'),
+          autocomplete: 'new-password',
+          required: true
+        ) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :password_confirmation,
+          field_type: :password,
+          label: t('users.views.confirm_new_password'),
+          autocomplete: 'new-password',
+          required: true
+        ) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :current_password,
+          field_type: :password,
+          label: t('users.views.current_password'),
+          autocomplete: 'current-password',
+          required: true
+        ) %>
+      <% end %>
+
+      <div class="mt-6 text-right">
+        <%= button(
+          text: t('users.buttons.change_password'),
+          type: 'submit',
+          color: :green,
+          show_loading: true,
+          icon: 'check'
+        ) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

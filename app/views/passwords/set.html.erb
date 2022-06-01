@@ -1,0 +1,8 @@
+<%= render(
+  'form',
+  locals: { title: t('users.set_password') },
+  url: confirm_password_path,
+  password_label: t('users.views.password'),
+  confirm_password_label: t('users.views.confirm_password'),
+  submit_button_text: t('users.buttons.set_my_password')
+) %>

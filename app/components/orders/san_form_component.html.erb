@@ -1,0 +1,125 @@
+<div>
+  <span class="text-lg font-bold"><%= t('orders.san.dnc_registry') %></span>
+  <div class="text-lg mt-4">
+  </div>
+</div>
+
+<div class="space-y-6" data-controller="san">
+  <div class="space-y-2">
+    <%= @form.hidden_field(
+      :san,
+      value: @last_nonexempt_san[:san],
+      data: {
+        'san-target' => 'combinedSanInput',
+        'order-confirmation-target': 'combinedSanInput',
+      }
+    ) %>
+    
+    <%= @form.label :san, t('orders.san.title') %>
+    <div class="flex items-center space-x-2">
+      <%= @form.number_field(
+        :san_1,
+        class: field_classes,
+        data: {
+          'san-target': 'san1Input',
+          action: 'keyup->san#limitSan1 keyup->san#combineSan keyup->order-confirmation#enableApproveButton'
+        }
+      ) %>
+
+      <span>-</span>
+      <%= @form.number_field(
+        :san_2,
+        class: field_classes,
+        data: {
+          'san-target': 'san2Input',
+          action: 'keyup->san#limitSan2 keyup->san#combineSan keyup->order-confirmation#enableApproveButton'
+        }
+      ) %>
+
+      <span>-</span>
+      <%= @form.number_field(
+        :san_3,
+        class: field_classes,
+        data: {
+          'san-target': 'san3Input',
+          action: 'keyup->san#limitSan3 keyup->san#combineSan keyup->order-confirmation#enableApproveButton'
+        }
+      ) %>
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-6">
+    <div class="flex-1 space-y-2">
+      <%= @form.label :expiration, t('orders.san.expiration_date') %>
+      <%= @form.date_field(
+        :expiration,
+        value: @last_nonexempt_san['expiration'],
+        class: field_classes,
+        data: {
+          action: 'change->order-confirmation#enableApproveButton',
+          'order-confirmation-target': 'sanExpirationInput',
+        }
+      ) %>
+    </div>
+
+    <div class="flex-1 space-y-2">
+      <%= @form.label :licensee, t('orders.san.licensee') %>
+      <%= @form.text_field(
+        :licensee,
+        value: @last_nonexempt_san[:licensee],
+        class: field_classes,
+        data: {
+          action: 'keyup->order-confirmation#enableApproveButton',
+          'order-confirmation-target': 'sanLicenseeInput',
+        }
+      ) %>
+    </div>
+  </div>
+
+  <div class="flex items-center space-x-6">
+    <div class="flex-1 space-y-2">
+      <%= @form.label :authname, t('orders.san.auth_name') %>
+      <%= @form.text_field(
+        :authname,
+        value: @last_nonexempt_san[:authname],
+        class: field_classes,
+        data: {
+          action: 'keyup->order-confirmation#enableApproveButton',
+          'order-confirmation-target': 'sanAuthnameInput',
+        }
+      ) %>
+    </div>
+
+    <div class="flex-1 space-y-2">
+      <%= @form.label :authtitle, t('orders.san.auth_title') %>
+      <%= @form.text_field(
+        :authtitle,
+        value: @last_nonexempt_san[:authtitle],
+        class: field_classes,
+        data: {
+          action: 'keyup->order-confirmation#enableApproveButton',
+          'order-confirmation-target': 'sanAuthtitleInput',
+        }
+      ) %>
+    </div>
+  </div>
+
+  <div>
+    <%= @form.check_box(
+      :exempt,
+      data: {
+        action: 'change->order-confirmation#enableApproveButton',
+        'order-confirmation-target': 'sanExemptCheckbox',
+      }
+    ) %>
+    <strong><%= @form.label :accept_terms, t('orders.san.dnc_exempt.title') %></strong>
+    <%= t('orders.san.dnc_exempt.before_link') %>
+    <%= link_to(
+      t('orders.san.dnc_exempt.link_text'),
+      'https://www.donotcall.gov/faq/faqbusiness.aspx#expandDef',
+      target: '_blank',
+      class: 'text-blue hover:underline')
+      %>
+    <%= t('orders.san.dnc_exempt.after_link') %>
+  </div>
+</div>

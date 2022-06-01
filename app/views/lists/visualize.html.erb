@@ -1,0 +1,24 @@
+<%= title t('lists.visualize') %>
+<%= subtitle @list.name %>
+
+<% content_for :navigation_actions do %>
+  <% if @list.appends.present? %>
+    <% form_with url: [:create_appended_list, @account, @list] do |form| %>
+      <%= button text: t('lists.buttons.create_appended_list'), show_loading: true, icon: 'layer-plus', color: 'green' %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<% if @list.visualization.present? %>
+  <%= lists_visualization list: @list %>
+<% else %>
+  <%= turbo_stream_from @list %>
+  <%= turbo_frame_tag dom_id(@list, :visualization) do %>
+    <%= empty_state do %>
+      <%= t('lists.visualizing') %>
+      <span class="flex items-center justify-center mt-4">
+        <%= icon name: 'spinner-third', class: 'w-8 h-8 spin' %>
+      </span>
+    <% end %>
+  <% end %>
+<% end %>

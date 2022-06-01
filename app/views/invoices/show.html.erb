@@ -1,0 +1,138 @@
+<%= title "Invoice #{@invoice.order_id}" %>
+
+<% content_for :navigation_actions do %>
+  <%= invoices_payment_button(invoice: @invoice) %>
+<% end %>
+
+<div class="space-y-10">
+  <div>
+    <div class="text-xl font-bold"><%= @invoice.account.company_name %></div>
+    <%= address_display(address: @invoice.account.full_address) %>
+    <%= @invoice.account.phone %>
+  </div>
+
+  <%= tables_table do |table| %>
+    <% table.header_cell name: t('views.table.date') %>
+    <% table.header_cell name: t('views.table.invoice_number') %>
+
+    <%= table.row do |row| %>
+      <%= row.cell do %>
+        <%= local_time(@invoice.created, '%B %e, %Y') %>
+      <% end %>
+
+      <%= row.cell do %>
+        <%= @invoice.order_id %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= tables_table do |table| %>
+    <% table.header_cell name: t('views.table.bill_to') %>
+    <% table.header_cell name: t('views.table.ship_to') %>
+
+    <%= table.row do |row| %>
+      <%= row.cell do %>
+        <div class="font-bold"><%= @invoice.order.billing_address.company %></div>
+        <%= address_display(address: @invoice.order.billing_address) %>
+      <% end %>
+
+      <%= row.cell do %>
+        <div class="font-bold"><%= @invoice.order.shipping_address.company %></div>
+        <%= address_display(address: @invoice.order.shipping_address) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= tables_table do |table| %>
+    <% table.header_cell name: t('views.table.terms') %>
+    <% table.header_cell name: t('views.table.rep') %>
+    <% table.header_cell name: t('views.table.ship_method') %>
+
+    <%= table.row do |row| %>
+      <%= row.cell do %>
+        <%= @invoice.payment_terms %>
+      <% end %>
+
+      <%= row.cell do %>
+        <%= @invoice.order.rep.name %>
+      <% end %>
+
+      <%= row.cell do %>
+        <%= @invoice.order.shipping_method %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= tables_table do |table| %>
+    <% table.header_cell name: t('views.table.quantity') %>
+    <% table.header_cell name: t('views.table.description'), classes: 'w-1/2' %>
+    <% table.header_cell name: t('views.table.price') %>
+    <% table.header_cell name: t('views.table.amount'), classes: 'text-right' %>
+
+    <% @invoice&.products&.each do |product| %>
+      <%= table.row do |row| %>
+        <%= row.cell do %>
+          <%= number_with_delimiter(product['quantity']) %>
+        <% end %>
+
+        <%= row.cell do %>
+            <div class="font-bold"><%= product['item'] %></div>
+            <%= product['description'] %><br/>
+            <%= product['details'] %>
+        <% end %>
+
+        <%= row.cell do %>
+          <%= product['price'] %>
+        <% end %>
+
+        <%= row.cell classes: 'text-right' do %>
+          <%= number_to_currency(product['amount']) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= table.row do |row| %>
+      <%= row.cell do %>
+        <span class="font-bold"><%= t('invoices.sum_total') %></span>
+      <% end %>
+
+      <% 2.times do |_index| %>
+        <%= row.cell do %><% end %>
+      <% end %>
+
+      <%= row.cell classes: 'text-right' do %>
+        <%= number_to_currency(@invoice.amount) %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @invoice.payments.present? %>
+    <%= tables_table do |table| %>
+      <%= table.header_cell name: t('invoices.payments_made'), classes: 'w-3/4' %>
+      <%= table.header_cell name: '', classes: 'w-1/4' %>
+      <% @invoice.payments.each do |payment| %>
+        <%= table.row do |row| %>
+          <%= row.cell do %>
+            <%= local_time(payment.created, '%B %e, %Y') %><br/>
+            <%= payment.notes %>
+          <% end %>
+          <%= row.cell classes: 'text-right' do %>
+            -<%= number_to_currency(payment.amount) %>
+          <% end %>
+        <% end %>
+      <% end %>
+    
+      <%= table.row do |row| %>
+        <%= row.cell do %>
+          <span class="font-bold"><%= t('invoices.remaining_balance') %></span>
+        <% end %>
+
+        <%= row.cell classes: 'text-right' do %>
+          <%= number_to_currency(@invoice.amount_due) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+<%= terms_modal(term: @invoice.order.term) %>

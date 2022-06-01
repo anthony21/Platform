@@ -1,0 +1,7 @@
+<% if flash[:notice] %>
+  <%= render 'flash_message', color: :green, icon: 'circle-check', message: flash[:notice] %>
+<% end %>
+
+<% if flash[:alert] %>
+  <%= render 'flash_message', color: :red, icon: 'circle-exclamation', message: flash[:alert] %>
+<% end %>

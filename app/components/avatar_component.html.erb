@@ -1,0 +1,12 @@
+<div class="flex items-center space-x-2">
+  <% if @user.present? %>
+    <%= gravatar_image @user, 'block w-6 h-6 rounded-full bg-gray-200 dark:bg-gray-800' %>
+    <% if @with_name %>
+      <div><%= @user.display_name %></div>
+    <% end %>
+  <% else %>
+    <div title="Unknown">
+      <%= icon name: 'circle-user', class: 'h-6 w-6 text-gray-200 dark:text-gray-700' %>
+    </div>
+  <% end %>
+</div>

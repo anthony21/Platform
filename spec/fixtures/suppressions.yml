@@ -1,0 +1,7 @@
+audience_consumer_uploaded:
+  suppressible: consumer (Audience)
+  suppression_list: uploaded_ready
+
+list_consumer_uploaded:
+  suppressible: consumer (List)
+  suppression_list: uploaded_ready

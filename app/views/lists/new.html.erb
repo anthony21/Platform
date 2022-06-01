@@ -1,0 +1,5 @@
+<% if @audience.present? %>
+  <%= render 'from_audience' %>
+<% else %>
+  <%= render 'upload' %>
+<% end %>

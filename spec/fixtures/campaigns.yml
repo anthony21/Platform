@@ -1,0 +1,40 @@
+acme:
+  name: My Cool Campaign
+  user: admin
+  audience: consumer
+  campaign_type: >
+    {
+      "option": "recurring_orders",
+      "range": "city",
+      "budget": "$10,000+",
+      "estimated_subscription_value": "$100",
+      "payment_frequency": ["monthly", "quarterly"],
+      "cost_per_conversion": ""
+    }
+  marketing_channels: >
+    {
+      "social_media": ["facebook"],
+      "web": [],
+      "email": [],
+      "influencer": ["mega"],
+      "direct_mail": [],
+      "telemarketing": []
+    }
+  company_systems: >
+    {
+      "website": ["wordpress"],
+      "crm": [],
+      "landing_page": ["mailchimp_landing"],
+      "chat": [],
+      "calendars": [],
+      "email_marketing": [],
+      "webinar": [],
+      "sms": []
+    }
+  campaign_content: >
+    {
+      "web_development": ["conversation_optimization"],
+      "creatives": ["creative_copywriting"],
+      "thought_leadership": [],
+      "video": []
+    }

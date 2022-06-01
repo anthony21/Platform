@@ -1,0 +1,34 @@
+<div class="shadow-sm rounded-lg">
+  <% if @filterable %>
+    <p class="pb-3 pt-5 px-8 bg-gray-200 dark:bg-gray-900 text-gray-700 dark:text-gray-300 rounded-t-lg">
+      <%= t('views.table.filter_list') %><span class="rounded-sm text-xs bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 px-1 py-0.5 font-semibold font-mono ml-2"><%= t('views.table.enter') %></span>.
+    </p>
+  <% end %>
+
+  <div class="overflow-x-scroll min-w-full">
+    <table
+      class="table-fixed w-full border-collapse <%= 'border-t-0' if @filterable %>"
+      <% if @filterable %>
+        data-controller="table-filter"
+      <% end %>
+      >
+      <thead>
+        <tr>
+          <% header_cells.each do |header_cell| %>
+            <%= header_cell %>
+          <% end %>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
+        <% rows.each do |row| %>
+          <%= row %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <% if @pagy.present? %>
+    <%= pagination pagy: @pagy, entry_name: @entry_name %>
+  <% end %>
+</div>

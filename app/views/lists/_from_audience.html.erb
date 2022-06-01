@@ -1,0 +1,50 @@
+<%= title t('lists.new') %>
+<%= subtitle @audience.name %>
+
+<div class="max-w-lg">
+  <%= form_with model: [@account, @audience, @list].compact do |form| %>
+    <%= cards_card do %>
+      <div class="mb-8">
+        <%= detail name: 'Account available records' do %>
+          <%= number_with_delimiter Current.account.available_records %>
+        <% end %>
+
+        <%= turbo_frame_tag "available-records-#{@audience.id}", src: url_for([:available_records, @account, @audience]) do %>
+          <%= detail name: 'Audience available records' do %>
+            <%= icon name: 'spinner-third', class: 'h-4 w-4 spin my-1' %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :record_count,
+          field_type: :number,
+          label: 'How many records?',
+          required: true,
+          autofocus: true
+        ) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :name,
+          label: 'Name this list',
+          required: true
+        ) %>
+      <% end %>
+
+      <div class="mt-6 text-right">
+        <%= button(
+          text: 'Create list',
+          type: :submit,
+          icon: 'check',
+          color: 'green',
+          show_loading: true
+        ) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,7 @@
+urban_outlets:
+  account: urban_outlets
+  record_count: 100000
+
+acme:
+  account: acme
+  record_count: 100000

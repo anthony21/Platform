@@ -1,0 +1,38 @@
+<%= title t('lists.upload') %>
+
+<div class="max-w-xl">
+  <%= form_with(
+    model: [@account, @list].compact,
+    data: {
+      controller: 'list-upload',
+      'list-upload-url-value' => url_for([:mapping, @account, :lists].compact)
+    }
+  ) do |f| %>
+    <%= dropzone(
+      f,
+      :file,
+      max_files: 1,
+      accepted_files: '.csv',
+      file_added_event: 'listUploadAdded',
+      file_success_event: 'listUploadSuccess'
+    ) do %>
+      <div class="dz-message dz-default border-dashed border-2 rounded-lg bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-600 p-8 text-gray-900 dark:text-gray-100 flex flex-col items-center justify-center">
+        <%= icon name: 'cloud-arrow-up', class: 'w-16 text-blue my-4' %>
+        <div>Drop your file here, or <span class="text-blue cursor-pointer hover:underline">browse</span></div>
+        <span class="text-sm text-gray-600 dark:text-gray-300">We currently only support <strong>CSV</strong> files</span>
+      </div>
+
+      <template id="preview">
+        <%= render 'upload_details' %>
+      </template>
+
+      <template id="uploadError">
+        <div class="p-4 mt-2 relative w-full text-xs font-medium rounded-lg text-red-600 dark:text-red-300 bg-gray-100 dark:bg-gray-900">
+          <%= t('lists.created.upload_failed') %>
+        </div>
+      </template>
+    <% end %>
+
+    <%= turbo_frame_tag :list_upload_form, data: { 'list-upload-target' => 'turboFrame' } %>
+  <% end %>
+</div>

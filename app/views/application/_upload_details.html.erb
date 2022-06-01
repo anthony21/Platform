@@ -1,0 +1,13 @@
+<div class="mb-4">
+  <div class="mt-2 relative">
+    <div class="dz-preview dz-file-preview flex flex-col justify-between rounded-lg p-4 w-full bg-white dark:bg-gray-900 shadow-sm">
+      <div class="flex items-center justify-between w-full">
+        <div class="truncate" data-dz-name><%= @list.name if @list %></div>
+        <div class="dz-size flex-1 whitespace-nowrap text-right text-sm" data-dz-size><%= number_to_human_size(@list.file.byte_size) if @list %></div>
+      </div>
+      <div class="mt-4 bg-gray-200 dark:bg-gray-700 rounded-lg overflow-hidden h-2 w-full">
+        <div data-dz-uploadprogress class="bg-blue h-2" style="width: 0%;"></div>
+      </div>
+    </div>
+  </div>
+</div>

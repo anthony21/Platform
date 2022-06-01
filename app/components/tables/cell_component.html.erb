@@ -1,0 +1,13 @@
+<td colspan="<%= colspan %>" class="h-0 p-0 leading-5 text-gray-700 dark:text-gray-300">
+  <div>
+    <% if @url.present? %>
+      <%= link_to @url, class: "#{classes} w-full h-full pl-8 py-6 block" do %>
+        <%= content %>
+      <% end %>
+    <% else %>
+      <div class="<%= classes %> px-8 py-5">
+        <%= content %>
+      </div>
+    <% end %>
+  </div>
+</td>

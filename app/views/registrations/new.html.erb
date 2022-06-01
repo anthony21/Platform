@@ -1,0 +1,85 @@
+<%= title t('users.sign_up') %>
+
+<%= unauthenticated_page title: t('users.sign_up') do |c| %>
+  <%= base_errors model: @user %>
+  
+  <% c.subtitle do %>
+    <%= t('general.or') %>
+    <%= link_to(
+      t('users.sign_in').downcase,
+      new_session_path,
+      class: 'text-blue hover:underline'
+    ) %>
+  <% end %>
+
+  <%= form_with model: @user, url: sign_up_path do |f| %>
+    <% if @invite_token.present? %>
+      <%= hidden_field_tag :invite_token, @invite_token %>
+    <% else %>
+      <%= f.fields_for :account do |account_form| %>
+        <%= cards_field do %>
+          <%= forms_field(
+            form: account_form,
+            field: :name,
+            label: t('users.views.organization')
+          ) %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :first_name,
+        label: t('users.views.first_name')
+      ) %>
+    <% end %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :last_name,
+        label: t('users.views.last_name')
+      ) %>
+    <% end %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :email,
+        field_type: :email,
+        label: t('users.views.email_address')
+      ) %>
+    <% end %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :password,
+        field_type: :password,
+        label: t('users.views.password'),
+        autocomplete: 'new-password'
+      ) %>
+    <% end %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :password_confirmation,
+        field_type: :password,
+        label: t('users.views.confirm_password'),
+        autocomplete: 'new-password'
+      ) %>
+    <% end %>
+
+    <div class="mt-6">
+      <%= button(
+        text: t('users.buttons.create'),
+        type: :submit,
+        color: :blue,
+        classes: 'w-full',
+        show_loading: true
+      ) %>
+    </div>
+  <% end %>
+<% end %>

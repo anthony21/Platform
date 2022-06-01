@@ -1,0 +1,14 @@
+<%= forms_label(
+  form: @form,
+  field: @field,
+  label: @label,
+  required: @required
+) %>
+
+<%= @form.select(
+  @field,
+  @options,
+  { selected: @value || @prompt, include_blank: @prompt },
+  class: 'mt-1 dark:bg-gray-1000 block transition duration-150 ease-in-out sm:leading-5 py-4 px-4 border border-gray-300 dark:border-gray-800 focus:border-blue focus:ring-blue dark:focus:border-blue dark:focus:ring-blue w-full rounded-md',
+  data: @data
+) %>

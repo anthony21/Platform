@@ -1,0 +1,13 @@
+<%= title t('data.look_up') %>
+
+<div class="max-w-lg" data-controller="data-look-up">
+  <%= form_with url: query_data_path do |f| %>
+    <div class="flex items-center space-x-4">
+      <%= f.text_field :phone, class: field_classes, placeholder: 'Enter phone number' %>
+      <%= button type: :submit, text: 'Search', color: :blue, class: 'py-3', data: { action: 'click->data-look-up#showLoading' }  %>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag :results, data: { 'data-look-up-target' => 'resultsFrame' } do %>
+  <% end %>
+</div>

@@ -1,0 +1,113 @@
+<%= title 'Ship to client' %>
+<%= subtitle @purchase_order.display_id %>
+
+<div class="flex space-x-4 items-start">
+  <div class="flex-1">
+    <%= form_with(
+      model: [@purchase_order, @shipment],
+      url: purchase_order_shipments_path(@purchase_order),
+      data: { controller: 'ship-upload' }
+    ) do |form| %>
+      <%= form.fields_for :list, @shipment.list do |list_form| %>
+        <% if @file %>
+          <%= list_form.hidden_field :file, value: @file %>
+          <div class="dz-message dz-default border-dashed border-2 rounded-lg bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-600 p-8 text-gray-900 dark:text-gray-100 text-center italic">
+            File already uploaded.
+          </div>
+        <% else %>
+          <%= dropzone(
+            list_form,
+            :file,
+            max_files: 1,
+            accepted_files: '.zip',
+            file_added_event: 'shipUploadAdded',
+            file_success_event: 'shipUploadSuccess'
+          ) do %>
+            <div class="dz-message dz-default border-dashed border-2 rounded-lg bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-600 p-8 text-gray-900 dark:text-gray-100 flex flex-col items-center justify-center">
+              <%= icon name: 'cloud-arrow-up', class: 'text-blue my-4 w-16' %>
+              <div>Drop your file here, or <span class="text-blue cursor-pointer hover:underline">browse</span></div>
+            </div>
+
+            <template id="preview">
+              <%= render 'upload_details' %>
+            </template>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <%= cards_card class: 'mt-4' do %>
+        <%= cards_field do %>
+          <%= forms_label form: form, field: :user_ids, label: 'Ship to users' %>
+
+          <% @purchase_order.order.account.users.each do |user| %>
+            <div class="flex items-center group">
+              <%= form.check_box(
+                :user_ids,
+                {
+                  class: 'h-5 w-5 pl-2 dark:bg-gray-1000 text-blue transition duration-150 ease-in-out cursor-pointer rounded-md border-none dark:focus:ring-offset-black focus:ring-blue',
+                  multiple: true,
+                  checked: true
+                },
+                user.id,
+                nil
+              ) %>
+              <label
+                for="core_shipment_user_ids_<%= user.id %>"
+                class="pl-2 pr-1 cursor-pointer text-gray-600 dark:text-gray-300 group-hover:text-gray-700 dark:group-hover:text-gray-200"
+                >
+                <%= user.email %>
+              </label>
+            </div>
+          <% end %>
+        <% end %>
+
+        <%= cards_field do %>
+          <%= forms_field(
+            form: form,
+            field: :quantity,
+            field_type: :number,
+            label: 'Quantity shipped',
+            required: true
+          ) %>
+        <% end %>
+
+        <%= cards_field do %>
+          <%= forms_field(
+            form: form,
+            field: :shipment_date,
+            field_type: :date,
+            label: 'Date',
+            required: true
+          ) %>
+        <% end %>
+
+        <%= cards_field do %>
+          <%= forms_field(
+            form: form,
+            field: :description,
+            field_type: :text_area,
+            label: 'Description',
+            required: true
+          ) %>
+        <% end %>
+
+        <%= cards_field do %>
+          <%= forms_field(
+            form: form,
+            field: :notes,
+            field_type: :text_area,
+            label: 'Notes',
+            required: true
+          ) %>
+        <% end %>
+
+        <div class="mt-4 flex items-center justify-end space-x-4">
+          <%= button url: '#', text: 'Cancel' %>
+          <%= button type: :submit, text: 'Ship', color: :green, show_loading: true, disabled: true, data: { 'ship-upload-target' => 'saveButton' } %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= purchase_orders_card purchase_order: @purchase_order %>
+</div>

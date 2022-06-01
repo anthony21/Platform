@@ -1,0 +1,3 @@
+CORE order <%= @order.id %> has completed processing.
+
+View order: <%= core_redirect_url(to: "/order/view/id/#{@order.id}") %>
