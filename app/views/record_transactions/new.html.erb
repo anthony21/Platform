@@ -1,0 +1,28 @@
+<%= title "#{t('record_transactions.new')} to #{@account.name}" %>
+
+<div class="max-w-lg">
+  <%= cards_card do %>
+    <%= form_with model: [@account, @record_transaction] do |form| %>
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :record_count,
+          field_type: :number,
+          label: 'How many records?',
+          required: true,
+          autofocus: true
+        ) %>
+      <% end %>
+
+      <div class="mt-6 text-right">
+        <%= button(
+          text: 'Add records',
+          type: :submit,
+          icon: 'check',
+          color: 'green',
+          show_loading: true
+        ) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

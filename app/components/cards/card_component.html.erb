@@ -1,0 +1,55 @@
+<%= tag.div(
+  class: "relative bg-white dark:bg-gray-900 py-4 px-8 rounded-lg shadow-sm sm:py-8 overflow-hidden #{@classes}",
+  **@options
+) do %>
+  <div class="relative">
+    <% if @title.present? %>
+      <div class="py-5 sm:pt-2 sm:pb-8 flex items-center">
+        <% if @icon.present? %>
+          <div class="flex items-center justify-center w-12 h-12 mr-5 text-center rounded-full bg-<%= @color %> text-white dark:text-black">
+            <%= icon name: @icon, class: 'h-5' %>
+          </div>
+        <% end %>
+
+        <h2 class="font-bold text-xl dark:text-gray-200"><%= @title %></h2>
+      </div>
+    <% end %>
+
+    <div class="sm:py-0">
+      <%= content %>
+
+      <% if @expandable %>
+        <div class="flex justify-end">
+          <a
+            href="#"
+            class="flex items-center justify-end text-blue hover:underline text-sm mt-4"
+            data-action="click->hidden#toggleHidden click->event#fire"
+            data-hidden-target-id="<%= expanded_hidden_id %>"
+            data-event-name="resize-input"
+            >
+            <%= icon(
+              name: 'chevron-up',
+              data: {
+                'hidden-target' => 'element',
+                'hidden-id' => expanded_hidden_id
+              }
+            ) %>
+            <%= icon(
+              name: 'chevron-down',
+              class: 'hidden',
+              data: {
+                'hidden-target' => 'element',
+                'hidden-id' => expanded_hidden_id
+              }
+            ) %>
+            <span class="ml-2">Advanced</span>
+          </a>
+        </div>
+
+        <div class="mt-4 hidden" data-hidden-target="element" data-hidden-id="<%= expanded_hidden_id %>">
+          <%= expanded_content %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,35 @@
+<%= title t('users.views.forgot_password') %>
+
+<%= unauthenticated_page title: t('users.views.forgot_password') do |c| %>
+  <% c.subtitle do %>
+    <%= t('general.or') %>
+    <%= link_to(
+      t('users.sign_in').downcase,
+      [:new, :session],
+      class: 'text-blue hover:underline'
+    ) %>
+  <% end %>
+
+  <%= form_with url: reset_password_path do |f| %>
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :email,
+        field_type: :email,
+        label: t('users.views.email_address'),
+        autofocus: true,
+        autocomplete: 'email'
+      ) %>
+    <% end %>
+
+    <div class="mt-6">
+      <%= button(
+        text: t('users.buttons.reset_password'),
+        type: :submit,
+        color: :blue,
+        classes: 'w-full',
+        show_loading: true
+      ) %>
+    </div>
+  <% end %>
+<% end %>

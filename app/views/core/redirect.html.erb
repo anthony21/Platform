@@ -1,0 +1,5 @@
+<%= title 'Redirecting to CORE' %>
+
+<div data-controller="core-redirect" data-core-redirect-to-value="<%= @to unless Rails.env.test? %>">
+  <%= link_to @to, @to, class: 'text-blue hover:underline cursor-pointer' %>
+</div>

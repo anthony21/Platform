@@ -1,0 +1,32 @@
+<div>
+  <%= forms_label(
+    form: @form,
+    field: @field,
+    label: @label,
+    required: @required,
+    help_text: @label_help_text
+  ) %>
+
+  <div class="mt-1 relative">
+    <% if content.present? %>
+      <%= content %>
+    <% else %>
+      <%= input %>
+      <% if errors.present? %>
+        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+          <%= icon name: 'circle-exclamation', class: 'h-5 w-5 text-red-500' %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<% if errors.present? %>
+  <% errors.each do |error_message| %>
+    <p class="mt-2 font-medium text-red"><%= error_message %></p>
+  <% end %>
+<% end %>
+
+<% if @help_text.present? %>
+  <p class="mt-2 text-xs font-medium text-gray-500 dark:text-gray-400"><%= @help_text %></p>
+<% end %>

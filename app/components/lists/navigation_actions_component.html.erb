@@ -1,0 +1,33 @@
+<div class="flex items-center">
+  <% if @list.file.attached? %>
+    <%= button(
+      text: t('lists.buttons.download'),
+      icon: 'cloud-arrow-down',
+      url: [:download, @list.account, @list],
+      data: { turbo: false },
+      class: 'mr-2',
+      color: :blue
+    ) %>
+  <% end %>
+  <%= button(
+    text: t('lists.buttons.edit'),
+    url: [:edit, @list.account, @list],
+    icon: 'pencil'
+  ) %>
+  <%= button(
+    text: t('audits.history'),
+    url: [:history, @list.account, @list].compact,
+    icon: 'clock-rotate-left',
+    class: 'ml-2'
+  ) %>
+  <% if @list.visualize? %>
+    <%= feature feature: :appends do %>
+      <%= button(
+        text: t('lists.buttons.append'),
+        url: [:appends, @list.account, @list].compact,
+        icon: 'layer-plus',
+        class: 'ml-2'
+      ) %>
+    <% end %>
+  <% end %>
+</div>

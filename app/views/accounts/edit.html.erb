@@ -1,0 +1,26 @@
+<%= title t('accounts.edit') %>
+
+<div class="max-w-lg">
+  <%= form_with model: @account do |form| %>
+    <%= cards_card do %>
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :name,
+          required: true,
+          label: 'Name'
+        ) %>
+      <% end %>
+
+      <div class="mt-6 text-right">
+        <%= button(
+          text: 'Save',
+          type: :submit,
+          icon: 'check',
+          color: 'green',
+          show_loading: true
+        ) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

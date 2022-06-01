@@ -1,0 +1,12 @@
+<!-- Global notification live region, render this permanently at the end of the document -->
+<div class="fixed inset-0 flex items-end p-10 pointer-events-none sm:items-start">
+  <div class="w-full flex flex-col items-center space-y-4 sm:items-end">
+    <% if flash[:notice] %>
+      <%= render 'notification', color: :green, icon: 'circle-check', message: flash[:notice] %>
+    <% end %>
+
+    <% if flash[:alert] %>
+      <%= render 'notification', color: :red, icon: 'circle-exclamation', message: flash[:alert] %>
+    <% end %>
+  </div>
+</div>

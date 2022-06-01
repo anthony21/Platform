@@ -1,0 +1,35 @@
+<button
+  type="button"
+  aria-pressed="false"
+  class="relative inline-flex flex-shrink-0 h-6 w-11 border-2 border-transparent cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue dark:focus:ring-blue dark:ring-offset-black rounded-full shadow-sm"
+  x-data="{ enabled: <%= @enabled %> }"
+  :class="{ 'bg-blue': enabled, 'bg-gray-200 dark:bg-gray-600': !enabled }"
+  @click.stop="enabled = !enabled"
+  data-controller="toggle"
+  data-toggle-id-value="<%= @id %>"
+  data-toggle-enabled-value="<%= @enabled %>"
+  data-action="click->toggle#toggle"
+  id="toggle_<%= @id %>"
+  >
+  <%= @form.hidden_field @field, value: @enabled, data: { 'toggle-target' => 'hiddenField' } %>
+  <span
+    class="translate-x-0 relative inline-block h-5 w-5 bg-white dark:bg-gray-800 shadow transform ring-0 transition ease-in-out duration-200 rounded-full"
+    :class="{ 'translate-x-5': enabled, 'translate-x-0': !enabled }"
+    >
+    <span
+      class="opacity-100 ease-in duration-200 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+      aria-hidden="true"
+      :class="{ 'opacity-0 ease-out duration-100': enabled, 'opacity-100 ease-in duration-200': !enabled }"
+      >
+      <%= render IconComponent.new(name: 'xmark', class: 'h-3 w-3 text-gray-400') %>
+    </span>
+
+    <span
+      class="opacity-0 ease-out duration-100 absolute inset-0 h-full w-full flex items-center justify-center transition-opacity"
+      aria-hidden="true"
+      :class="{ 'opacity-100 ease-in duration-200': enabled, 'opacity-0 ease-out duration-100': !enabled }"
+      >
+      <%= render IconComponent.new(name: 'check', class: 'h-3 w-3 text-blue') %>
+    </span>
+  </span>
+</button>

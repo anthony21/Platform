@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.turbo-progress-bar {
+  @apply bg-blue dark:bg-blue;
+}
+
+.active-icon .icon {
+  @apply text-blue;
+}
+
+.audit-highlight {
+  @apply font-bold text-gray-700 dark:text-white;
+}
+
+.date-range-input::-webkit-calendar-picker-indicator {
+  @apply pl-0 ml-0;
+}
+
+.progress-line {
+  @apply fixed w-screen top-0 left-0 sm:pl-56;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.progress-line,
+.progress-line:before {
+  height: 4px;
+  width: 100%;
+  margin: 0;
+}
+
+.progress-line:before {
+  @apply bg-gray-500 dark:bg-gray-500;
+  content: '';
+  -webkit-animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: running-progress 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@-webkit-keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 0%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+
+}
+@keyframes running-progress {
+  0% { margin-left: 0px; margin-right: 100%; }
+  50% { margin-left: 0%; margin-right: 0%; }
+  100% { margin-left: 100%; margin-right: 0; }
+}
+
+.noUi-handle {
+  @apply bg-gray-300 dark:bg-gray-500 hover:bg-gray-400 dark:hover:bg-gray-600 border-none border-transparent outline-none cursor-move;
+  box-shadow: none;
+
+  &:before, &:after {
+    @apply bg-gray-600 dark:bg-gray-400;
+  }
+}
+
+.noUi-active {
+  @apply bg-gray-400;
+}
+
+.noUi-target {
+  @apply bg-gray-200 dark:bg-gray-700 border-none;
+  box-shadow: none;
+}
+
+.noUi-connect {
+  @apply bg-blue border-transparent;
+}
+
+.noUi-tooltip {
+  @apply dark:text-gray-300 border-none bg-transparent;
+}
+
+.fltrow {
+  td {
+    @apply pl-8 pr-6 pb-6 bg-gray-50 dark:bg-gray-900;
+  }
+
+  input {
+    @apply dark:bg-gray-1000 border-gray-200 dark:border-gray-800 focus:border-blue focus:ring-blue dark:focus:border-blue dark:focus:ring-blue block border duration-150 ease-in-out px-4 py-3 sm:leading-5 text-sm transition w-full rounded-sm shadow-sm;
+  }
+}
+
+.bg-gradient-0 {
+  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+}
+
+.bg-gradient-1 {
+  background-image: linear-gradient(to top, rgba(96, 221, 142, 1) 11.2%, rgba(24, 138, 141, 1) 91.1%);
+}
+
+.bg-gradient-2 {
+  background-image: linear-gradient(to top, #cc208e 0%, #6713d2 100%);
+}
+
+.spin {
+  animation-name: spin;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
+
+.back-and-forth {
+  position: absolute;
+  animation-name: back-and-forth;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  transition: all;
+}
+
+@keyframes back-and-forth {
+  0% {
+    left: 0;
+    transform: scaleX(100%);
+  }
+  49% {
+    left: 100px;
+    transform: scaleX(100%);
+  }
+  50% {
+    left: 100px;
+    transform: scaleX(-100%);
+  }
+  100% {
+    left: 0;
+    transform: scaleX(-100%);
+  }
+}
+
+/*
+  HACK: This is a fix for the autocomplete input in Safari. For non-Safari browsers, we need a
+  `user-select: none;` in order to prevent focusing the input when clicking outside of it. For
+  Safari, that makes the input unclickable altogether. This media query + class rule will
+  add user-select text back for Safari only.
+
+  See: https://armno.in.th/2020/11/26/css-user-select/
+*/
+@media not all and (min-resolution:.001dpcm) {
+  @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+    .safari-select-text {
+      -webkit-user-select: text;
+    }
+  }
+}
+
+.flt {
+  @apply dark:bg-gray-1000 block border duration-150 ease-in-out placeholder-gray-600 dark:placeholder-gray-400 px-4 py-4 rounded-md sm:leading-5 text-gray-900 dark:text-gray-200 transition w-full;
+}
+
+.fltrow {
+  @apply bg-gray-200 dark:bg-gray-1000;
+}
+
+.fltrow td {
+  @apply px-8;
+}

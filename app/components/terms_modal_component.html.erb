@@ -1,0 +1,17 @@
+<div class="pt-8 pb-4">
+  <%= t('invoices.terms_and_conditions.label') %>
+  <span
+    id="terms-link"
+    class="text-blue hover:underline cursor-pointer"
+    data-action="click->event#fire"
+    data-event-name="show-modal"
+    data-event-detail="terms"
+    >
+    <%= t('general.here') %>
+  </span>
+</div>
+
+<%= modal id: 'terms', class: 'w-3/5' do %>
+  <h2 class="text-xl font-bold mb-8"><%= t('invoices.terms_and_conditions.title') %></h2>
+
+<% end %>

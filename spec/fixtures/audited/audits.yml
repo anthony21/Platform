@@ -1,0 +1,62 @@
+account_acme_created:
+  auditable: acme (Account)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">Acme Corporation</span>
+
+audience_auto_created:
+  auditable: auto (Audience)
+  associated: urban_outlets (Account)
+  user: account_manager (User)
+  action: create
+  comment: created <span class="audit-highlight">My Auto Audience</span>
+
+audience_consumer_created:
+  auditable: consumer (Audience)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">My Consumer Audience</span>
+
+campaign_acme_created:
+  auditable: acme (Campaign)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">My Cool Campaign</span>
+
+list_appended_created:
+  auditable: appended (List)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">my-ready-list.csv (Appended)</span>
+
+list_consumer_created:
+  auditable: consumer (List)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">My Consumer List</span>
+
+list_uploaded_created:
+  auditable: uploaded (List)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">my-list.csv</span>
+
+list_uploaded_ready_created:
+  auditable: uploaded_ready (List)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">my-ready-list.csv</span>
+
+user_admin_created:
+  auditable: admin (User)
+  associated: acme (Account)
+  user: admin (User)
+  action: create
+  comment: created <span class="audit-highlight">John Smith</span>

@@ -1,0 +1,54 @@
+<div>
+  <%= hidden_field_tag :first_line, first_line %>
+
+  <%= cards_card do %>
+    <%= cards_field do %>
+      <%= forms_field(
+        form: form,
+        field: :name,
+        required: true,
+        label: 'Name',
+        spellcheck: false,
+        value: name
+      ) %>
+    <% end %>
+  <% end %>
+
+  <%= cards_card class: 'mt-4' do %>
+    <p class="pt-2 pb-8">
+      <%= t('lists.mapping_help_text') %>
+    </p>
+
+    <% if mapping_error.present? %>
+      <p class="pb-6 text-sm font-medium text-red-600"><%= mapping_error.message %></p>
+    <% end %>
+
+    <% mapping_fields.each do |field| %>
+      <%= cards_field do %>
+        <%= forms_dropdown_field(
+          form: form,
+          field: "column_mappings[#{field}]",
+          label: field.humanize,
+          options: select_options,
+          value: column_mapping(field),
+          prompt: 'Select a CSV column'
+        ) %>
+      <% end %>
+    <% end %>
+
+    <div class="mt-6 text-right">
+      <%= button(
+        text: 'Save list',
+        type: :submit,
+        icon: 'check',
+        color: 'green',
+        show_loading: true,
+        disabled: @list.nil?,
+        data: {
+          'list-upload-target' => 'saveButton'
+        }
+      ) %>
+    </div>
+  <% end %>
+</div>
+

@@ -1,0 +1,18 @@
+<%= title @data_source.name %>
+
+<%= tables_table filterable: true do |table| %>
+  <%= table.header_cell name: t('views.table.field') %>
+  <%= table.header_cell name: t('views.table.value') %>
+
+  <% @data_source.fields.selectable.map { |f| field_values_with_name(@data_source, f.key) }.flatten.each do |value| %>
+    <%= table.row do |row| %>
+      <%= row.cell do %>
+        <%= value[:field_name] %>
+      <% end %>
+
+      <%= row.cell do %>
+        <% value[:name] %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

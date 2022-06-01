@@ -1,0 +1,36 @@
+<%= title t('record_transactions.show', id: @record_transaction.id) %>
+
+<%= content_for :navigation_actions do %>
+  <%= button(
+    text: 'Edit',
+    url: [:edit, @account, @record_transaction],
+    icon: 'pencil',
+    classes: 'mr-2'
+  ) %>
+  <%= button(
+    text: 'Delete',
+    url: [@account, @record_transaction],
+    icon: 'trash',
+    color: :red,
+    method: 'delete',
+    data: {
+      confirm: "Are you sure you want to delete record transaction ##{@record_transaction.id}?"
+    }
+  ) %>
+<% end %>
+
+<div class="sm:max-w-lg">
+  <%= cards_card do %>
+    <%= detail name: 'Account', url: @account do %>
+      <%= @account.name %>
+    <% end %>
+
+    <%= detail name: 'Date' do %>
+      <%= local_time(@record_transaction.created_at, '%m/%d/%y %l:%M %p') %>
+    <% end %>
+
+    <%= detail name: 'Record count' do %>
+      +<%= number_with_delimiter(@record_transaction.record_count) %>
+    <% end %>
+  <% end %>
+</div>

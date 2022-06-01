@@ -1,0 +1,33 @@
+<div
+  class="flex-1 overflow-y-scroll"
+  <% unless @tabs %>
+    data-controller="selectable-list"
+  <% end %>
+  >
+  <% @elements.each do |element| %>
+    <button
+      class="px-5 py-3 3xl:px-8 3xl:py-5 m-0 w-full hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none <%= selected?(element) ? 'bg-gray-100 dark:bg-gray-700' : '' %>"
+      data-selectable-list-target="element"
+      data-action="<%= @tabs ? 'click->tab#show' : 'click->selectable-list#selectElement' %>"
+      data-element-value="<%= element[:value] %>"
+      data-tab-target="link"
+      data-tab-id="<%= element[:value] %>"
+      >
+      <div class="flex items-center">
+        <% if element[:icon].present? %>
+          <div class="flex items-center justify-center w-12 h-12 mr-5 3xl:w-16 3xl:h-16 3xl:mr-8 text-center rounded-full bg-<%= element[:color] %> text-white dark:text-gray-900">
+            <%= icon name: element[:icon], class: 'h-6 w-6' %>
+          </div>
+        <% end %>
+
+        <div class="flex-1 text-left lg:text-lg">
+          <% if I18n.exists?(element[:name]) %>
+            <%= t(element[:name]) %>
+          <% else %>
+            <%= element[:name] %>
+          <% end %>
+        </div>
+      </div>
+    </button>
+  <% end %>
+</div>

@@ -1,0 +1,1 @@
+<%= ActiveStorageFixtures.new.blobs.to_yaml %>

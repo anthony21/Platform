@@ -1,0 +1,54 @@
+<%= scoped_title t('users.title') %>
+
+<%= content_for :navigation_actions do %>
+  <% if @account&.current? %>
+    <%= button(
+      text: t('users.buttons.invite'),
+      type: 'button',
+      icon: 'user-plus',
+      color: :blue,
+      data: {
+        action: 'event#fire',
+        'event-name' => 'show-modal',
+        'event-detail' => 'invite-user'
+      }
+    ) %>
+  <% end %>
+<% end %>
+
+<%= page_header_search url: users_path, value: @search, placeholder: t('users.search.placeholder') %>
+
+<%= tables_table pagy: @pagy, entry_name: 'user' do |table| %>
+  <%= table.header_cell name: t('views.table.name') %>
+
+  <% if @account.blank? %>
+    <%= table.header_cell name: t('views.table.account') %>
+  <% end %>
+
+  <%= table.header_cell name: t('views.table.email') %>
+  <%= table.header_cell name: t('views.table.role'), classes: 'w-48' %>
+
+  <% @users.each do |user| %>
+    <%= table.row url: [@account, user].compact do |row| %>
+      <%= row.cell classes: 'truncate' do %>
+        <%= avatar user: user, with_name: true %>
+      <% end %>
+
+      <% if @account.blank? %>
+        <%= row.cell classes: 'truncate' do %>
+          <%= user.account.name %>
+        <% end %>
+      <% end %>
+
+      <%= row.cell classes: 'truncate' do %>
+        <%= user.email %>
+      <% end %>
+
+      <%= row.cell do %>
+        <%= users_role user: %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= render InviteUserModalComponent.new %>

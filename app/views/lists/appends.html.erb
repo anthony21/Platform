@@ -1,0 +1,43 @@
+<%= title t('lists.available_appends') %>
+<%= subtitle @list.name %>
+
+<% if @list.errors.present? %>
+  <p class="text-red">errors</p>
+<% end %>
+
+<p class="mb-8"><%= t('lists.appends.prompt') %></p>
+
+<%= form_with(
+  model: @list,
+  url: [:append, @account, @list].compact,
+  data: {
+    controller: 'lists--appends',
+    'lists--appends-active-class-value' => 'bg-blue-light dark:bg-blue-light hover:bg-blue-light'
+  }
+) do |form| %>
+  <%= form.hidden_field :visualization, value: nil %>
+  <%= form.hidden_field :appends, data: { 'lists--appends-target' => 'hiddenField' }, value: '[]' %>
+
+  <div class="flex flex-wrap">
+  <% List.append_data_source.appends.each do |append| %>
+    <%= cards_card(
+      icon: append.icon,
+      color: append.color,
+      title: append.display_name,
+      class: 'hover:bg-gray-300 dark:hover:bg-gray-800 mb-4 cursor-pointer w-96 mr-4 mb-4',
+      data: {
+        'append' => append.key,
+        'action' => 'click->lists--appends#toggle'
+      }
+    ) do %>
+      <% append.output_fields.each do |field| %>
+        <div class="inline-block bg-gray-200 dark:bg-gray-800 rounded px-2 p-1 mr-1 mb-2"><%= field.display_name %></div>
+      <% end %>
+    <% end %>
+  <% end %>
+  </div>
+
+  <div class="flex items-center justify-center">
+    <%= button text: t('lists.buttons.visualize'), show_loading: true, icon: 'chart-pie', color: 'green' %>
+  </div>
+<% end %>

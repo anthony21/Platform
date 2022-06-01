@@ -1,0 +1,33 @@
+<%= detail name: 'Status' do %>
+  <%= lists_status list: @list %>
+<% end %>
+
+<%= detail name: @list.list_type == 'append' ? 'Appended record count' : 'Record count' do %>
+  <% if @list.record_count.nil? %>
+    <span class="text-gray-500">n/a</span>
+  <% else %>
+    <%= number_with_delimiter @list.record_count %>
+  <% end %>
+<% end %>
+
+<% if @list.available_match_types %>
+  <%= detail name: t('lists.match_types.title') do %>
+    <% @list.available_match_types.each do |match_type| %>
+      <p><%= t("lists.match_types.#{match_type}") %></p>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= detail name: 'Created' do %>
+  <div class="flex">
+    <%= avatar_link user: @list.user, account: @account, class: 'mr-2' %>
+    <%= time at: @list.created_at %>
+  </div>
+<% end %>
+
+<%= detail name: 'Last updated' do %>
+  <div class="flex items-center">
+    <%= avatar_link user: @list.audits.last.user, account: @account, class: 'mr-2' %>
+    <%= time at: @list.updated_at %>
+  </div>
+<% end %>

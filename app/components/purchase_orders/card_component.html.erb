@@ -1,0 +1,17 @@
+<div class="w-60 p-4 bg-white dark:bg-gray-900 shadow-sm rounded-lg">
+  <%= detail name: 'Order status' do %>
+    <%= @purchase_order.order.status.humanize %>
+  <% end %>
+
+  <%= detail name: 'Sales rep' do %>
+    <%= @purchase_order.order.rep.name %>
+  <% end %>
+
+  <%= detail name: 'Processor' do %>
+    <%= @purchase_order.processor&.name || 'N/A' %>
+  <% end %>
+
+  <%= detail name: 'Created' do %>
+    <%= short_time at: @purchase_order.created_at %>
+  <% end %>
+</div>

@@ -1,0 +1,25 @@
+<%= title t('reports.timings') %>
+
+<div class="px-4 sm:px-0">
+  <div class="mb-10">
+    <%= form_with url: '/reports/core/timings', local: true, method: :get do |form| %>
+      <div class="flex items-center">
+        <%= form.date_field :start_at, value: @report.start_at.to_date, class: field_classes %>
+        <span class="font-mono mx-2">to</span>
+        <%= form.date_field :end_at, value: @report.end_at.to_date, class: field_classes %>
+        <%= button text: 'Update', type: :submit, icon: 'arrows-rotate', color: :gray, show_loading: true, name: nil, classes: 'ml-2 py-3' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="flex flex-col md:flex-row md:space-x-6 space-y-6 md:space-y-0">
+    <% @report.run.each do |value| %>
+      <div class="flex flex-col w-full items-center text-center p-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-800 rounded-sm border border-gray-200 dark:border-gray-800">
+        <div><%= value[:name] %></div>
+        <div class="text-2xl font-bold mt-4"><%= value[:value] %></div>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render 'links' %>
+</div>

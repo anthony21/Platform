@@ -1,0 +1,29 @@
+<% button_content = capture do %>
+  <% if @show_loading %>
+    <%= icon(
+      name: 'spinner-third', 
+      class: '-ml-0.5 mr-2 h-4 w-4 spin hidden', 
+      data: { 'button-loading-target' => 'loadingIcon' } 
+    ) %>
+  <% end %>
+
+  <% if @icon.present? %>
+    <%= icon(
+      name: @icon, 
+      class: '-ml-0.5 mr-2 h-4 w-4',
+      data: { 'button-loading-target' => 'icon' }
+    ) %>
+  <% end %>
+
+  <%= @text %>
+<% end %>
+
+<% if link? %>
+  <%= link_to @url, { class: button_class }.deep_merge(@options) do %>
+    <%= button_content %>
+  <% end %>
+<% else %>
+  <%= button_tag({ class: button_class, data: button_data }.deep_merge(@options)) do %>
+    <%= button_content %>
+  <% end %>
+<% end %>

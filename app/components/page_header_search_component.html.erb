@@ -1,0 +1,43 @@
+<%= form_with(
+  url: @url,
+  method: :get,
+  data: {
+    controller: 'user-filter',
+    'user-filter-target' => 'form'
+  },
+  class: 'relative rounded-t-lg overflow-hidden'
+) do |f| %>
+  <% if @user_filter.present? %>
+    <%= f.select(
+      :user_filter,
+      user_filter_values,
+      {
+        selected: selected_filter
+      },
+      {
+        data: {
+          action: 'change->user-filter#submitForm'
+        },
+        class: 'absolute inset-y-0 left-0 pl-8 bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-850 transition text-gray-900 dark:text-gray-200 placeholder-gray-600 dark:placeholder-gray-300 border-none focus:ring-0'
+      }
+    ) %>
+  <% end %>
+
+  <%= f.text_field(
+    :search,
+    value: @value,
+    placeholder: @placeholder,
+    class: "bg-white dark:bg-gray-900 hover:bg-gray-50 dark:hover:bg-gray-850 focus:bg-white dark:focus:bg-gray-900 transition text-gray-900 dark:text-gray-200 placeholder-gray-600 dark:placeholder-gray-300 w-full border-none pl-16 pr-12 py-5 focus:ring-0 #{'ml-36' if @user_filter.present?}"
+  ) %>
+
+  <div class="absolute inset-y-0 left-0 pl-8 flex items-center text-gray-400 <%= 'ml-36' if @user_filter.present? %>">
+    <%= icon name: 'magnifying-glass', class: 'h-4 w-4' %>
+  </div>
+
+  <% if @value.present? %>
+    <%= link_to @url, class: 'absolute inset-y-0 right-0 pr-8 flex items-center text-gray-600 dark:text-gray-300 hover:underline hover:text-gray-700 dark:hover:text-gray-200' do %>
+      <%= icon name: 'xmark', class: 'h-4 w-4' %>
+      <span class="ml-2 text-sm">Clear search</span>
+    <% end %>
+  <% end %>
+<% end %>

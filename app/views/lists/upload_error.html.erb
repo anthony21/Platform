@@ -1,0 +1,13 @@
+<%= title t('lists.upload') %>
+
+<div class="max-w-xl">
+  <%= form_with(
+      model: [@account, @list].compact
+    ) do |f| %>
+    <%= f.hidden_field :file, value: @list.file.signed_id %>
+
+    <%= render 'upload_details' %>
+
+    <%= lists_mapping_form name: @list.name, first_line: @first_line, list: @list %>
+  <% end %>
+</div>

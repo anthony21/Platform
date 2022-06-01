@@ -1,0 +1,30 @@
+<% block_content = capture do %>
+  <div>
+    <% if @name.present? %>
+      <div class="pb-1 text-gray-700 dark:text-gray-300 text-xs uppercase tracking-widest">
+        <%= @name %>
+      </div>
+    <% end %>
+
+    <div class="dark:text-gray-200">
+      <%= content %>
+    </div>
+  </div>
+<% end %>
+
+<% if @url.present? %>
+  <%= link_to @url, class: 'block border-gray-100 dark:border-gray-1000 last:border-b-0 py-4 -mx-2 rounded-lg px-4 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer flex items-center justify-between group' do %>
+    <%= block_content %>
+    <%= icon name: 'chevron-right', class: 'h-4 text-gray-400 dark:text-gray-600 group-hover:text-gray-900 dark:group-hover:text-gray-200' %>
+  <% end %>
+<% elsif @selection_buttons.present? %>
+  <div
+    class="cursor-pointer rounded-md border-gray-100 dark:border-gray-1000 last:border-b-0 py-4 px-2 hover:bg-gray-200 dark:hover:bg-gray-800"
+    >
+    <%= block_content %>
+  </div>
+<% else %>
+  <div class="border-gray-100 dark:border-gray-1000 last:border-b-0 py-4 px-2">
+    <%= block_content %>
+  </div>
+<% end %>

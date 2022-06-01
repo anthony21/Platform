@@ -1,0 +1,21 @@
+<%= title t('accounts.title') %>
+
+<%= page_header_search url: accounts_path, value: @search, placeholder: 'Search accounts' %>
+
+<% if @accounts.empty? %>
+  <p class="text-center text-lg p-20 text-gray-500">
+    No accounts match the search.
+  </p>
+<% else %>
+  <%= tables_table pagy: @pagy, entry_name: 'account' do |table| %>
+    <%= table.header_cell name: t('views.table.name'), classes: 'w-full' %>
+
+    <% @accounts.each do |account| %>
+      <%= table.row url: [account].compact do |row| %>
+        <%= row.cell classes: 'truncate' do %>
+          <%= account.name %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

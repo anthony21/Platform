@@ -1,0 +1,75 @@
+<%= scoped_title t('lists.title') %>
+
+<%= page_header_search(
+  url: [@account, :lists].compact,
+  value: @search,
+  placeholder: 'Search lists',
+  user_filter: @user_filter
+) %>
+
+<% if @account.present? %>
+  <%= content_for :navigation_actions do %>
+    <%= button(
+      text: 'Upload a list',
+      icon: 'cloud-arrow-up',
+      url: [:new, @account, :list],
+      color: :blue
+    ) %>
+  <% end %>
+<% end %>
+
+<% if @lists.empty? %>
+  <%= empty_state with_header: true do %>
+    <% if @search.present? || @user_filter == 'mine' %>
+      <%= t('lists.empty.search') %>
+    <% else %>
+      <%= t('lists.empty.no_search') %>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= tables_table pagy: @pagy, entry_name: 'list' do |table| %>
+    <% if @account.blank? %>
+      <%= table.header_cell name: t('views.table.account'), classes: 'w-1/4' %>
+    <% end %>
+
+    <%= table.header_cell name: t('views.table.name') %>
+    <%= table.header_cell name: t('views.table.data_source'), classes: 'w-48' %>
+    <%= table.header_cell name: t('views.table.status'), classes: 'w-48' %>
+
+    <% @lists.each do |list| %>
+      <%= table.row url: [@account, list].compact do |row| %>
+        <% if @account.blank? %>
+          <%= row.cell classes: 'truncate' do %>
+            <%= list.account.name %>
+          <% end %>
+        <% end %>
+
+        <%= row.cell classes: 'truncate' do %>
+          <%= list.name %>
+        <% end %>
+
+        <%= row.cell do %>
+          <div class="flex items-center space-x-3">
+            <% if list.list_type == 'audience' %>
+              <%= icon name: list.data_source.icon, class: 'h-4 w-4' %>
+              <span><%= list.data_source.name %></span>
+            <% elsif list.list_type == 'append' %>
+              <%= icon name: 'layer-plus', class: 'h-4 w-4' %>
+              <span>Append</span>
+            <% else %>
+              <%= icon name: 'file-csv', class: 'h-4 w-4' %>
+              <span>CSV</span>
+            <% end %>
+          </div>
+        <% end %>
+
+        <%= row.cell do %>
+          <%= turbo_stream_from list %>
+          <%= turbo_frame_tag dom_id(list, :status) do %>
+            <%= lists_status list: list %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,19 @@
+<div class="bg-<%= color %> text-white p-4 rounded-lg mb-8" data-controller="hidden">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <%= icon name: icon, class: 'h-5 w-5' %>
+      <div class="ml-3">
+        <p class="text-sm leading-5 font-semibold">
+          <%= message %>
+        </p>
+      </div>
+    </div>
+    <% unless local_assigns[:permanent] %>
+      <%= icon(
+        name: 'xmark',
+        class: 'h-5 w-5 cursor-pointer',
+        data: { action: 'click->hidden#hideElement' }
+      ) %>
+    <% end %>
+  </div>
+</div>

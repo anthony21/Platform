@@ -1,0 +1,9 @@
+<% if @user.present? %>
+  <%= link_to [@account, @user].compact, class: "cursor-pointer #{@options[:class]}" do %>
+    <%= avatar user: @user %>
+  <% end %>
+<% else %>
+  <div class="<%= @options[:class] %>">
+    <%= avatar user: nil %>
+  </div>
+<% end %>

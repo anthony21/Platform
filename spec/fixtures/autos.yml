@@ -1,0 +1,7 @@
+honda_pilot:
+  make: HONDA
+  model: PILOT
+
+toyota_corolla:
+  make: toyota
+  model: corolla

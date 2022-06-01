@@ -1,0 +1,41 @@
+<%= cards_field do %>
+  <%= forms_label(
+    form: @form,
+    field: @field,
+    label: @label,
+    required: @required
+  ) %>
+
+  <div
+    data-controller="button-radio"
+    data-button-radio-field-value="<%= @field %>"
+    data-button-radio-selected-class-value="<%= selected_classes %>"
+    data-button-radio-deselected-class-value="<%= deselected_classes %>"
+    class="mt-1 flex flex-col space-y-1"
+    >
+    <% @options.each do |option| %>
+      <label
+        data-button-radio-target="option"
+        data-option="<%= option[:value] %>"
+        id="<%= "#{@field}-#{option[:name].to_s.parameterize}" %>"
+        class="rounded-lg py-2 px-4 flex items-center text-sm sm:flex-1 cursor-pointer focus:outline-none <%= selected?(option) ? selected_classes : deselected_classes %>"
+        >
+        <%= @form.radio_button(
+          @field,
+          option[:value],
+          class: 'sr-only',
+          data: {
+            action: 'change->button-radio#applySelectedStyle',
+            option: option[:value]
+          }
+        ) %>
+        <%= icon name: option[:icon], class: 'w-4 h-4 mr-4' %>
+        <p class="py-1 leading-tight">
+          <span class="font-semibold"><%= option[:name] %></span>
+          <br/>
+          <small><%= option[:description] %></small>
+        </p>
+      </label>
+    <% end %>
+  </div>
+<% end %>

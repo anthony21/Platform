@@ -1,0 +1,23 @@
+<%= turbo_stream.replace list do %>
+  <%= turbo_frame_tag list do %>
+    <%= render list, account: list.account %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(list, :status) do %>
+  <%= turbo_frame_tag dom_id(list, :status) do %>
+    <%= lists_status list: list %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace dom_id(list, :navigation_actions) do %>
+  <%= turbo_frame_tag dom_id(list, :navigation_actions), target: :_top do %>
+    <%= lists_navigation_actions list: list %>
+  <% end %>
+<% end %>
+
+<% if list.visualization.present? %>
+  <%= turbo_stream.replace dom_id(list, :visualization) do %>
+    <%= lists_visualization list: list %>
+  <% end %>
+<% end %>
