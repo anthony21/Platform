@@ -3,6 +3,8 @@ default: &default
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   url: <%= ENV.fetch('DATABASE_URL', 'mysql2://deploy@localhost') %>
+  username: <%= Rails.application.credentials.DATABASE_NAME %> 
+  password: <%= Rails.application.credentials.DATABASE_PASS %>
 
 development:
   platform:
