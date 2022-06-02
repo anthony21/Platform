@@ -4,7 +4,6 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   url: <%= ENV.fetch('DATABASE_URL', 'mysql2://deploy@localhost') %>
 
-
 development:
   platform:
     <<: *default
