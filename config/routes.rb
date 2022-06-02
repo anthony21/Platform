@@ -1,5 +1,9 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+require 'resque/server'
+Rails.application.routes.draw do
+  mount ActionCable.server => '/cable'
+  mount Resque::Server.new, at: '/resque', constraints: AdminConstraint.new
   get 'sign_in', to: 'sessions#new', as: :new_session
   post 'sign_in', to: 'sessions#create', as: :session
   delete 'sign_out', to: 'sessions#destroy', as: :destroy_session

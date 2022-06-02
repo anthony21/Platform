@@ -1,0 +1,10 @@
+{
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "git.ignoreLimitWarning": true,
+  "files.trimFinalNewlines": true,
+  "files.insertFinalNewline": true,
+  "html.format.endWithNewline": true,
+  "workbench.preferredDarkColorTheme": "Default Dark+",
+  "workbench.colorTheme": "Default Dark+"
+}

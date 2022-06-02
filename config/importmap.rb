@@ -1,10 +1,21 @@
-# Pin npm packages by running ./bin/importmap
+# frozen_string_literal: true
 
-pin "application", preload: true
-pin "@hotwired/turbo-rails", to: "turbo.js", preload: true
-pin "@hotwired/stimulus", to: "stimulus.js", preload: true
-pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
-pin_all_from "app/javascript/controllers", under: "controllers"
+# Rails
+pin 'application', preload: true
+pin '@rails/activestorage', to: 'activestorage.esm.js'
+pin '@rails/ujs', to: 'https://ga.jspm.io/npm:@rails/ujs@7.0.1/lib/assets/compiled/rails-ujs.js'
+pin '@hotwired/turbo-rails', to: 'turbo.js', preload: true
+pin '@hotwired/stimulus', to: 'stimulus.min.js', preload: true
+pin '@hotwired/stimulus-loading', to: 'stimulus-loading.js', preload: true
+pin_all_from 'app/javascript/controllers', under: 'controllers'
+pin_all_from 'app/javascript/utils', under: 'utils'
+
+# Dropzone
+pin 'cropperjs', to: 'https://ga.jspm.io/npm:cropperjs@1.5.12/dist/cropper.js'
+pin 'dropzone', to: 'https://ga.jspm.io/npm:dropzone@5.9.2/dist/dropzone.js'
+pin 'utif', to: 'https://ga.jspm.io/npm:utif@3.1.0/UTIF.js'
+pin 'pako', to: 'https://ga.jspm.io/npm:pako@1.0.11/index.js'
+pin 'process', to: 'https://ga.jspm.io/npm:@jspm/core@2.0.0-beta.17/nodelibs/browser/process-production.js'
 
 # Misc
 pin 'alpine-turbo-drive-adapter', to: 'https://ga.jspm.io/npm:alpine-turbo-drive-adapter@2.0.0/dist/alpine-turbo-drive-adapter.esm.js'

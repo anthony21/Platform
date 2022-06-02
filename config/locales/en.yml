@@ -46,3 +46,7 @@ en:
   dashboard:
     history: No activity
     queue: Queue
+  views:
+   table:
+    all: All available
+    only_mine: My list

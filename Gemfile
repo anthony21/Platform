@@ -2,6 +2,7 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.1.2"
+
 gem 'active_link_to'
 gem 'activerecord-import'
 gem 'activerecord-msgpack_serializer'
@@ -24,6 +25,8 @@ gem 'pagy'
 gem 'puma', '~> 4.3.12'
 gem 'rails'
 gem 'redis', '~> 4.0'
+gem 'resque'
+gem 'resque-scheduler'
 gem 'sentry-rails'
 gem 'sentry-ruby'
 gem 'sprockets-rails'
