@@ -1,0 +1,44 @@
+<%= title t('accounts.billing') %>
+<%= subtitle @account.name %>
+
+<%= content_for :navigation_actions do %>
+  <%= button(
+    text: t('accounts.buttons.edit_payment_method'),
+    url: '',
+    icon: 'credit-card',
+    classes: 'mr-2'
+  ) %>
+  <%= button(
+    text: t('accounts.buttons.edit_subscription'),
+    url: '',
+    icon: 'rotate',
+    classes: 'mr-2'
+  ) %>
+<% end %>
+
+<% if @invoices.empty? %>
+  <%= empty_state do %>
+    <%= t('accounts.invoices.empty') %>
+  <% end %>
+<% else %>
+  <h2 class="text-lg mb-2 font-bold"><%= t('accounts.invoices.title') %></h2>
+
+  <%= tables_table pagy: @pagy, entry_name: 'invoice' do |table| %>
+    <%= table.header_cell name: t('views.table.id'), classes: 'w-32' %>
+    <%= table.header_cell name: t('views.table.date'), classes: 'w-48' %>
+    <%= table.header_cell name: t('views.table.amount'), classes: 'w-60' %>
+    <% @invoices.order(created: :desc).each do |invoice| %>
+      <%= table.row url: invoice_path(invoice) do |row| %>
+        <%= row.cell do %>
+          <%= invoice.order_id %>
+        <% end %>
+        <%= row.cell do %>
+          <%= local_time(invoice.created, '%B %-e, %Y') %>
+        <% end %>
+        <%= row.cell do %>
+          <%= number_to_currency(invoice.amount) %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

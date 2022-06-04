@@ -1,0 +1,8 @@
+<%= turbo_stream.replace :results do %>
+  <%= turbo_frame_tag :results, data: { 'data-look-up-target' => 'resultsFrame' } do %>
+    <div class="text-center mt-8"><%= pluralize(@results.size, 'result') %> found</div>
+    <% @results.each do |result| %>
+      <%= ping_result result: result %>
+    <% end %>
+  <% end %>
+<% end %>

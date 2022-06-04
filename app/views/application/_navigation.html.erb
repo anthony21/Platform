@@ -1,0 +1,112 @@
+<div x-data="{ showMenu: false }">
+  <div class="relative flex-shrink-0 flex">
+    <div class="flex-1 px-8 sm:px-16 flex justify-between items-start">
+      <div class="flex-shrink-0 flex items-center justify-start sm:hidden mt-8 mb-4">
+      <%= inline_svg_tag 'upo.svg', class: 'h-5 w-auto fill-current' %>
+
+      </div>
+
+      <% unless local_assigns[:hide_mobile_navigation] %>
+        <div class="flex-1 flex justify-end sm:hidden mt-6 mb-4">
+          <button id="mobile-menu-button" type="button" class="text-2xl inline-flex items-center justify-center p-2 rounded-sm text-gray-400 hover:text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue dark:focus:ring-blue dark:focus:ring-offset-black" aria-controls="mobile-menu" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <span x-show="!showMenu" @click="showMenu = true">
+              <%= icon name: 'bars', class: 'w-4 h-4'%>
+            </span>
+            <span x-show="showMenu" @click="showMenu = false">
+              <%= icon name: 'xmark', class: 'w-4 h-4' %>
+            </span>
+          </button>
+        </div>
+      <% end %>
+
+      <div class="hidden sm:block flex-1 pt-14 pb-8">
+        <h1 class="font-black uppercase text-4xl"><%= content_for :title %></h1>
+
+        <% if content_for? :subtitle %>
+          <h2 class="font-semibold text-xl text-gray-400"><%= content_for :subtitle %></h1>
+        <% end %>
+
+        <% if content_for? :navigation_actions %>
+          <div class="mt-4">
+            <%= content_for :navigation_actions %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="hidden sm:ml-6 sm:flex sm:items-center mt-14">
+        <div class="ml-3 relative" x-data="{ showProfileMenu: false }">
+          <div>
+            <button
+              type="button"
+              class="max-w-xs flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue dark:focus:ring-blue dark:focus:ring-offset-black"
+              id="user-menu-button"
+              aria-expanded="false"
+              aria-haspopup="true"
+              @click="showProfileMenu = !showProfileMenu"
+              >
+              <span class="sr-only">Open user menu</span>
+              <%= gravatar_image Current.user, 'inline-block h-10 w-10 rounded-full bg-gray-200 dark:bg-gray-800' %>
+            </button>
+          </div>
+
+          <div
+            class="origin-top-right absolute right-0 mt-2 w-48 rounded-lg overflow-hidden shadow-lg py-1 bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-10 dark:focus:ring-offset-black"
+            style="display: none;"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="user-menu-button"
+            x-show="showProfileMenu"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="transform opacity-0 scale-95"
+            x-transition:enter-end="transform opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-75"
+            x-transition:leave-start="transform opacity-100 scale-100"
+            x-transition:leave-end="transform opacity-0 scale-95"
+            @click.away="showProfileMenu = false"
+            >
+            <% if Feature.enabled? :super_admin %>
+              <%= link_to 'Features', [Current.user, :features], class: 'block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' %>
+            <% end %>
+            <%= link_to 'Profile settings', edit_profile_path, class: 'block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' %>
+            <% if Feature.enabled? :account_admin %>
+              <%= link_to t('accounts.buttons.drop_title'), [Current.account], class: 'block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' %>
+            <% end %>
+            <%= link_to 'Sign out', destroy_session_path, method: :delete, class: 'block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sm:hidden bg-white dark:bg-gray-900 z-50" id="mobile-menu" style="display: none;" x-show="showMenu">
+    <div class="pt-2 pb-3 space-y-1">
+      <%= mobile_navigation_link 'Dashboard', :root, icon: 'home' %>
+      <%= mobile_navigation_link 'Lists', [Current.account, :lists], icon: 'address-card', active: :inclusive %>
+    
+      <% if Feature.enabled? :account_management %>
+        <%= mobile_navigation_link 'Super Admin', admin_path, icon: 'user-crown', active: :inclusive %>
+      <% end %>
+    </div>
+    <div class="pt-4 pb-3 border-t border-gray-200 dark:border-gray-800">
+      <div class="flex items-center px-4">
+        <div class="flex-shrink-0">
+          <%= gravatar_image Current.user, 'h-10 w-10 rounded-full bg-gray-700' %>
+        </div>
+        <div class="ml-3">
+          <div class="text-base font-medium text-gray-800 dark:text-gray-200"><%= Current.user.full_name %></div>
+          <div class="text-sm font-medium text-gray-900 dark:text-gray-300"><%= Current.user.email %></div>
+        </div>
+      </div>
+      <div class="mt-3 space-y-1">
+        <% if Feature.enabled? :super_admin %>
+          <%= link_to 'Features', [Current.user, :features], class: 'block px-4 py-2 text-base font-medium text-gray-900 dark:text-gray-200 hover:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900' %>
+        <% end %>
+        <%= link_to 'Profile settings', edit_profile_path, class: 'block px-4 py-2 text-base font-medium text-gray-900 dark:text-gray-200 hover:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900' %>
+        <% if Feature.enabled? :account_admin %>
+          <%= link_to t('accounts.buttons.drop_title'), [Current.account], class: 'block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700' %>
+        <% end %>
+        <%= link_to 'Sign out', destroy_session_path, method: :delete, class: 'block px-4 py-2 text-base font-medium text-gray-900 dark:text-gray-200 hover:text-gray-800 hover:bg-gray-100 dark:hover:bg-gray-900' %>
+      </div>
+    </div>
+  </div>
+</div>

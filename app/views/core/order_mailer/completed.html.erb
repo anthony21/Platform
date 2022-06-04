@@ -1,0 +1,5 @@
+<%= mailer_title title: @subject %>
+
+<p style="margin: 0; margin-bottom: 24px;">
+  CORE order <%= link_to @order.id, core_redirect_url(to: "/order/view/id/#{@order.id}"), target: :_blank %> has completed processing.
+</p>

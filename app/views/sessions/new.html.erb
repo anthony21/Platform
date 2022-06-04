@@ -1,0 +1,50 @@
+<%= title t('users.sign_in') %>
+
+<%= unauthenticated_page title: t('users.sign_in') do |c| %>
+  <% c.subtitle do %>
+    <%= t('general.or') %>
+    <%= link_to t('users.sign_up').downcase, [:new, :sign_up], class: 'text-blue hover:underline' %>
+  <% end %>
+
+  <%= form_with url: session_path do |f| %>
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :email,
+        field_type: :email,
+        autofocus: true,
+        label: t('users.views.email_address')
+      ) %>
+    <% end %>
+
+    <%= cards_field do %>
+      <%= forms_field(
+        form: f,
+        field: :password,
+        field_type: :password,
+        label: t('users.views.password')
+      ) %>
+    <% end %>
+
+    <%= link_to(
+      t('users.views.forgot_password'),
+      [:new, :password],
+      class: 'text-sm font-semibold text-blue hover:underline'
+    ) %>
+
+    <div class="mt-6 flex items-center justify-end">
+      <div class="text-sm leading-5">
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <%= button(
+        text: t('users.buttons.sign_in'),
+        type: :submit,
+        classes: 'w-full',
+        show_loading: true,
+        color: :blue
+      ) %>
+    </div>
+  <% end %>
+<% end %>

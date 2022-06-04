@@ -1,0 +1,17 @@
+<div class="h-screen flex overflow-hidden bg-gray-100 dark:bg-gray-1000" style x-data="{ showMenu: false }">
+  <%= render 'sidebar' %>
+
+  <div class="flex flex-col w-0 flex-1 overflow-hidden">
+    <main class="flex-1 relative overflow-y-auto focus:outline-none">
+      <%= system_notices notices: @system_notices %>
+      <%= render 'navigation' %>
+      <%= yield :secondary_navigation %>
+
+      <div class="py-6 px-6 sm:px-16">
+        <%= yield %>
+      </div>
+    </main>
+  </div>
+</div>
+
+<%= render 'notifications' %>

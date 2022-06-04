@@ -1,0 +1,8 @@
+<%= render(
+  'form',
+  locals: { title: t('users.change_password') },
+  url: update_password_path,
+  password_label: t('users.views.new_password'),
+  confirm_password_label: t('users.views.confirm_new_password'),
+  submit_button_text: t('users.buttons.change_my_password')
+) %>

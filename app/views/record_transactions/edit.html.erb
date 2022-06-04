@@ -1,0 +1,27 @@
+<%= title t('record_transactions.edit') %>
+
+<div class="max-w-lg">
+  <%= form_with model: [@account, @record_transaction] do |form| %>
+    <%= cards_card do %>
+      <%= cards_field do %>
+        <%= forms_field(
+          form: form,
+          field: :record_count,
+          required: true,
+          field_type: :number,
+          label: 'How many records?'
+        ) %>
+      <% end %>
+
+      <div class="mt-6 text-right">
+        <%= button(
+          text: 'Save',
+          type: :submit,
+          icon: 'check',
+          color: 'green',
+          show_loading: true
+        ) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

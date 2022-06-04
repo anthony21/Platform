@@ -1,0 +1,24 @@
+<%= title t('features.title') %>
+<%= subtitle @user.display_name %>
+
+<%= tables_table do |table| %>
+  <%= table.header_cell name: t('views.table.name') %>
+  <%= table.header_cell name: t('views.table.id') %>
+  <%= table.header_cell name: t('views.table.enabled'), classes: 'w-32 text-right' %>
+
+  <% Feature.all.each do |feature| %>
+    <%= table.row do |row| %>
+      <%= row.cell do %>
+        <%= feature[:name] %>
+      <% end %>
+
+      <%= row.cell do %>
+        <span class="font-mono"><%= feature[:id] %></span>
+      <% end %>
+
+      <%= row.cell classes: 'flex justify-end' do %>
+        <%= feature_toggle user: @user, feature: feature %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

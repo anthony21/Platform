@@ -1,0 +1,242 @@
+<%= title t('orders.confirmations.title') %>
+
+<div class="space-y-10">
+  <span><%= t('orders.confirmations.instructions', order: @order.id) %></span>
+
+  <%= tables_table do |table| %>
+    <% table.header_cell name: local_time(@order.created, '%B %e, %Y'), classes: 'text-right' %>
+
+    <%= table.row do |row| %>
+      <%= row.cell do %>
+        <div class="flex justify-between">
+          <div>
+            <%= "#{t('general.from')}:" %><br/><br/>
+            <strong><%= @order.partner.name %></strong><br/>
+            <%= address_display(address: @order.partner.full_address) %>
+            <%= @order.partner.phone %>
+          </div>
+            
+          <div>
+            <%= "#{t('general.to').capitalize}:" %><br/><br/>
+            <div class="font-bold"><%= @order.shipping_address.company %></div>
+            <%= address_display(address: @order.shipping_address) %>
+          </div>
+
+          <div>
+            <%= "#{t('views.table.details')}:" %><br/><br/>
+            <strong><%= "#{t('orders.title')} ##{@order.id}" %></strong><br/>
+            <%= "#{t('orders.payment_terms')}: #{@order.payment_terms.humanize}" %><br/>
+            <%= "#{t('orders.shipping_method')}: #{@order.shipping_method}" %><br/>
+            <%= "#{t('orders.sales_rep')}: #{@order.rep.name}" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= tables_table do |table| %>
+    <% table.header_cell name: t('views.table.item'), classes: 'w-1/6' %>
+    <% table.header_cell name: t('views.table.description'), classes: 'w-1/3' %>
+    <% table.header_cell name: t('views.table.quantity'), classes: 'w-1/6' %>
+    <% table.header_cell name: t('views.table.unit_price'), classes: 'w-1/6' %>
+    <% table.header_cell name: t('views.table.amount'), classes: 'w-1/6' %>
+    <% @order.products.each do |product| %>
+      <%= table.row do |row| %>
+        <%= row.cell do %>
+          <strong><%= product['item'] %></strong>
+        <% end %>
+
+        <%= row.cell do %>
+          <strong><%= product['description'] %></strong>
+        <% end %>
+
+        <%= row.cell do %>
+          <strong><%= number_with_delimiter(product['quantity']) %></strong>
+        <% end %>
+
+        <%= row.cell do %>
+          <strong><%= product['price'] %></strong>
+        <% end %>
+
+        <%= row.cell classes: 'text-right' do %>
+          <strong><%= number_to_currency(product['amount']) %></strong>
+        <% end %>
+      <% end %>
+      <% product['fields'].each do |field| %>
+        <% if field['visiblePay'] %>
+          <%= table.row do |row| %>
+            <%= row.cell do %>
+              <%= field['label'] %><br/>
+            <% end %>
+
+            <%= row.cell do %>
+              <%= field['value'] %><br/>
+            <% end %>
+
+            <%= row.cell colspan: 4 %>
+          <% end %>
+        <% end %>
+      <% end %>
+
+      <% product['services'].each do |service| %>
+        <%= table.row do |row| %>
+          <% Array(service).each do |scope| %>
+            <% if scope.present? %>
+              <%= row.cell colspan: 5 do %>
+                <% scope.split("\n").compact_blank.each do |s| %>
+                  <%= s %><br/>
+                <% end %>
+              <% end %>
+            <% end %>
+          <% end %>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <% if @order.discount['amount'] > 0 %>
+      <%= table.row do |row| %>
+        <%= row.cell do %>
+          <strong><%= t('orders.discount') %></strong>
+        <% end %>
+
+        <%= row.cell do %>
+          <strong><%= @order.discount['description'] %></strong>
+        <% end %>
+
+        <%= row.cell colspan: 2 %>
+
+        <%= row.cell do %>
+          <div class="text-right font-bold">-<%= number_to_currency(@order.discount['amount']) %></div>
+        <% end %>
+      <% end %>
+    <% end %>
+
+    <%= table.row do |row| %>
+      <%= row.cell colspan: 3 %>
+
+      <%= row.cell do %>
+        <strong><%= "#{t('orders.total_due')}:" %></strong>
+      <% end %>
+
+      <%= row.cell do %>
+        <div class="text-right font-bold"><%= number_to_currency(@order.amount) %></div>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <% if @order.notes.present? %>
+    <%= tables_table do |table| %>
+      <% table.header_cell name: t('orders.notes') %>
+
+      <%= table.row do |row| %>
+        <%= row.cell do %>
+          <%= @order.notes %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <%= form_with(
+    model: [@order, @confirmation],
+    url: order_order_confirmations_path(@order),
+    class: 'space-y-8',
+    data: {
+      controller: 'order-confirmation',
+      'order-confirmation-disabled-button-text-value': t('orders.buttons.approve_and_sign'),
+      'order-confirmation-approve-button-text-value': t('orders.buttons.agree_and_continue'),
+      'order-confirmation-reject-button-text-value': t('orders.buttons.notify_rep')
+    }
+  ) do |form| %>
+    <div class="space-y-4">
+      <span class="text-lg font-bold"><%= t('orders.confirmations.approval_question') %></span>
+      <div>
+        <%= form.radio_button(
+          :approval,
+          'yes',
+          data: {
+            'order-confirmation-target': 'approveRadio',
+            action: 'change->order-confirmation#showApprovalDetails change->order-confirmation#enableApproveButton'
+          }
+        ) %>
+        <%= form.label :approval_yes, t('orders.confirmations.correct_order') %>
+      </div>
+      <div>
+        <%= form.radio_button(
+          :approval,
+          "no",
+          data: {
+            action: 'change->order-confirmation#hideApprovalDetails'
+          }
+        ) %>
+        <%= form.label :approval_no, t('orders.confirmations.contact_me') %>
+      </div>
+    </div>
+
+    <div data-order-confirmation-target="approvalDetails" class="space-y-8">
+      <%= orders_san_form(
+        san_order: @order.san,
+        form: form, 
+        last_nonexempt_san: @order.account.last_nonexempt_san
+      ) %>
+
+      <div>
+        <span class="text-lg font-bold"><%= t('orders.confirmations.terms_and_conditions') %></span>
+        <div class="text-lg mt-4">
+        </div>
+      </div>
+
+      <div>
+        <%= form.check_box(
+          :accept_terms,
+          data: {
+            'order-confirmation-target': 'acceptTermsCheckbox',
+            action: 'change->order-confirmation#enableApproveButton'
+          }
+        ) %>
+        <%= form.label :accept_terms, t('orders.confirmations.accept_terms') %>
+      </div>
+
+      <div class="space-y-6">
+        <div class="space-y-2">
+          <%= form.label :name, t('orders.confirmations.type_full_name') %>
+          <%= form.text_field(
+            :name,
+            class: field_classes,
+            data: {
+              'order-confirmation-target': 'nameInput',
+              action: 'keyup->order-confirmation#enableApproveButton'
+            }
+          ) %>
+        </div>
+        
+        <div class="space-y-2">
+          <%= form.label :job_title, t('orders.confirmations.type_job_title') %>
+          <%= form.text_field(
+            :job_title,
+            class: field_classes,
+            data: {
+              'order-confirmation-target': 'jobTitleInput',
+              action: 'keyup->order-confirmation#enableApproveButton'
+            }
+          ) %>
+        </div>
+      </div>
+    </div>
+
+    <% if @order.net_agreement? %>
+      <div>
+        <%= t('orders.confirmations.net_agreement', amount: number_to_currency(@order.amount), partner: @order.partner.name) %>
+      </div>
+    <% end %>
+
+    <%= button(
+      text: t('orders.buttons.approve_and_sign'),
+      type: :submit,
+      color: 'blue',
+      disabled: true,
+      data: {
+        'order-confirmation-target': 'submitButton'
+      }
+    ) %>
+  <% end%>
+</div>
