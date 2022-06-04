@@ -30,4 +30,23 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  activerecord:
+   errors:
+     models:
+      attributes:
+       data_source:
+         required: You must select a data source
+  unauthorized: You don't have privileges for this
+  users:
+    title: Users
+    settings: Profile settings
+    show: "%{display_name} - User"
+    sign_up: Create a new account
+    sign_in: Sign in to your account
+  dashboard:
+    history: No activity
+    queue: Queue
+  views:
+   table:
+    all: All available
+    only_mine: My list
