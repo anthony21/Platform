@@ -1,0 +1,7 @@
+<% if @errors.present? %>
+  <ul class="text-red-500 text-sm 2xl:text-base 3xl:text-xl 4xl:text-3xl mb-6 mx-5 text-center">
+    <% @errors.full_messages.each do |message| %>
+      <li><%= t(message) %></li>
+    <% end %>
+  </ul>
+<% end %>

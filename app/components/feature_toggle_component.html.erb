@@ -1,0 +1,13 @@
+<div
+  data-controller="feature-toggle"
+  data-feature-toggle-id-value="<%= id %>"
+  data-feature-toggle-enabled-value="<%= enabled? %>"
+  >
+  <%= form_with(
+    url: user_feature_path(@user, id),
+    method: 'put',
+    data: { feature_toggle_target: 'form' }
+  ) do |form| %>
+    <%= render ToggleComponent.new(form: form, field: 'enabled', enabled: enabled?, id: id) %>
+  <% end %>
+</div>

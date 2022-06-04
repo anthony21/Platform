@@ -1,0 +1,38 @@
+<% if payment_options.include?('check') && payment_options.include?('credit') %>
+  <%= button(
+    text: t('invoices.buttons.pay_now'),
+    color: :green,
+    data: {
+      action: 'event#fire',
+      'event-name' => 'show-modal',
+      'event-detail' => 'payment_options'
+    }
+  ) %>
+
+
+  <%= modal id: 'payment_options', class: 'w-1/4' do %>
+    <h2 class="text-xl font-bold mb-8"><%= t('invoices.choose_payment_method') %></h2>
+
+    <div class="space-x-2">
+      <%= button(
+        text: t('invoices.buttons.credit_card'),
+        color: :blue,
+        icon: 'credit-card',
+        url: pay_invoice_path(@invoice)
+      ) %>
+
+      <%= button(
+        text: t('invoices.buttons.check'),
+        color: :blue,
+        icon: 'money-check-dollar',
+        url: '#'
+      ) %>
+    </div>
+  <% end %>
+<% else %>
+  <%= button(
+    text: t('invoices.buttons.pay_now'),
+    color: :green,
+    url: payment_url
+  ) %>
+<% end %>
