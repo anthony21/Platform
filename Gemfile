@@ -1,72 +1,82 @@
-source "https://rubygems.org"
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.1.2"
+ruby '3.1.2'
 
-# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.0.3"
-
-# The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
-gem "sprockets-rails"
-
-# Use postgresql as the database for Active Record
-gem "pg", "~> 1.1"
-
-# Use the Puma web server [https://github.com/puma/puma]
-gem "puma", "~> 5.0"
-
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem "importmap-rails"
-
-# Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
-gem "turbo-rails"
-
-# Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
-gem "stimulus-rails"
-
-# Build JSON APIs with ease [https://github.com/rails/jbuilder]
-gem "jbuilder"
-
-# Use Redis adapter to run Action Cable in production
-gem "redis", "~> 4.0"
-
-# Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
-# gem "kredis"
-
-# Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
-# gem "bcrypt", "~> 3.1.7"
-
-# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
-
-# Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
-
-# Use Sass to process CSS
-# gem "sassc-rails"
-
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem 'active_link_to'
+gem 'activerecord-import'
+gem 'activerecord-msgpack_serializer'
+gem 'active_scheduler'
+gem 'active_storage_validations'
+gem 'ansi'
+gem 'audited', '~> 5.0'
+gem 'awesome_print'
+gem 'bcrypt'
+gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+gem 'bootsnap', '>= 1.4.2', require: false
+gem 'email_validator'
+gem 'ed25519', '>= 1.2', '< 2.0'
+gem 'faraday'
+gem 'fixed_width_file_parser'
+gem 'figaro'
+gem 'hiredis'
+gem 'image_processing'
+gem 'importmap-rails'
+gem 'inline_svg'
+gem 'local_time'
+gem 'lograge'
+gem 'niceql'
+gem 'oj'
+gem 'pagy'
+gem 'premailer-rails'
+gem 'pry-rails'
+gem 'puma', '~> 4.3.12'
+gem 'pg'
+gem 'rails'
+gem 'ratelimit'
+gem 'redis', '~> 4.0'
+gem 'redlock'
+gem 'remote_syslog_logger'
+gem 'resque'
+gem 'resque-scheduler'
+gem 'rest-client'
+gem 'ring'
+gem 'rubyzip', '>= 1.0.0'
+gem 'sentry-rails'
+gem 'sentry-ruby'
+gem 'sequel', require: false
+gem 'skylight'
+gem 'sprockets-rails'
+gem 'statsd-ruby'
+gem 'stimulus-rails'
+gem 'stripe'
+gem 'tty-prompt', require: false
+gem 'turbo-rails'
+gem 'view_component'
 
 group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem 'byebug', platforms: %i(mri mingw x64_mingw)
+  gem 'factory_bot_rails'
+  gem 'faker'
+  gem 'rspec-its'
+  gem 'rspec-match_ignoring_whitespace'
+  gem 'rspec-rails'
 end
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
-  gem "web-console"
-
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem 'foreman'
+  gem 'listen', '>= 3.0.5', '< 3.2'
+  gem 'rubocop'
+  gem 'web-console'
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
-  gem "webdrivers"
+  gem 'capybara'
+  gem 'selenium-webdriver'
+  gem 'simplecov'
+  gem 'simplecov-cobertura', require: false
+  gem 'webdrivers'
+  gem 'webmock'
 end
