@@ -1,0 +1,33 @@
+<%= title t('users.edit') %>
+
+<div class="max-w-lg">
+  <%= cards_card do %>
+    <%= form_with model: [@account, @user].compact do |form| %>
+      <%= cards_field do %>
+        <%= forms_field(form: form, field: :first_name, label: t('users.views.first_name'), required: true) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_field(form: form, field: :last_name, label: t('users.views.last_name'), required: true) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_field(form: form, field: :email, label: t('users.views.email_address'), required: true) %>
+      <% end %>
+
+      <%= cards_field do %>
+        <%= forms_dropdown_field(
+          form: form,
+          field: :role,
+          options: User.roles.keys.map { |role| [role.capitalize, role] },
+          required: true,
+          label: t('users.views.role')
+        ) %>
+      <% end %>
+
+      <div class="mt-6 text-right">
+        <%= button(text: t('users.buttons.save'), type: 'submit', icon: 'check', color: :green, show_loading: true) %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

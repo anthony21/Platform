@@ -3,9 +3,12 @@ git_source(:github) { |repo| 'https://github.com/#{repo}.git' }
 
 ruby '3.1.2'
 gem 'active_link_to'
+gem 'audited', '~> 5.0'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 gem 'bcrypt'
+gem 'email_validator'
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem 'importmap-rails'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]

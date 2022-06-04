@@ -1,0 +1,57 @@
+<%= title @user.display_name %>
+
+<%= content_for :navigation_actions do %>
+  <% if @user.current? %>
+    <%= button(
+      text: t('actions.edit_profile'),
+      url: edit_profile_path,
+      icon: 'pencil'
+    ) %>
+  <% else %>
+    <%= button(
+      text: t('actions.edit'),
+      url: [:edit, @account, @user].compact,
+      icon: 'pencil'
+    ) %>
+  <% end %>
+  <% if Feature.enabled? :super_admin %>
+    <%= button(
+      text: t('actions.manage_features'),
+      url: [@user, :features],
+      icon: 'toggle-on',
+      classes: 'ml-2'
+    ) %>
+  <% end %>
+  <% if Feature.enabled? :account_management %>
+    <%= button(
+      text: t('audits.history'),
+      url: [:history, @account, @user].compact,
+      icon: 'clock-rotate-left',
+      classes: 'ml-2'
+    ) %>
+  <% end %>
+<% end %>
+
+<div class="sm:max-w-lg">
+  <%= cards_card class: 'sm:max-w-lg' do %>
+    <%= gravatar_image @user, 'h-16 w-16 rounded-full mt-4 mr-1 bg-gray-100 dark:bg-gray-700 absolute top-0 right-0' %>
+
+    <%= detail name: t('users.views.name') do %>
+      <%= @user.full_name %>
+    <% end %>
+
+    <%= detail name: t('users.views.email') do %>
+      <%= @user.email %>
+    <% end %>
+
+    <% unless @user.account.current? %>
+      <%= detail name: t('users.views.account'), url: @user.account do %>
+        <%= @user.account.name %>
+      <% end %>
+    <% end %>
+
+    <%= detail name: t('users.views.role') do %>
+      <%= users_role user: @user %>
+    <% end %>
+  <% end %>
+</div>
