@@ -29,7 +29,7 @@
   <%= render 'theme_watcher' %>
   </head>
 
-  <body>
+  <body class="subpixel-antialiased h-full dark:text-gray-200 <%= Current.user ? 'bg-gray-100 dark:bg-gray-900' : 'bg-white dark:bg-gray-900' %>" data-controller="hidden event">
   <% if Current.user %>
   <%= render 'application_shell' %>
 <% else %>

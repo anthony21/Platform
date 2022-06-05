@@ -1,9 +1,15 @@
-import { Application } from '@hotwired/stimulus'
+import * as ActiveStorage from '@rails/activestorage'
+import Rails from '@rails/ujs'
+import '@hotwired/turbo-rails'
+import 'alpine-turbo-drive-adapter'
+import Alpine from 'alpinejs'
+import LocalTime from 'local-time'
 
-const application = Application.start()
+import 'controllers'
 
-// Configure Stimulus development experience
-application.debug = false
-window.Stimulus = application
+Rails.start()
+ActiveStorage.start()
+LocalTime.start() 
 
-export { application }
+window.Alpine = Alpine
+Alpine.start()

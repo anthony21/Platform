@@ -31,6 +31,7 @@ gem 'sentry-ruby'
 gem 'statsd-ruby'
 # Hotwire's modest JavaScript framework [https://stimulus.hotwired.dev]
 gem 'stimulus-rails'
+gem 'tailwindcss-rails'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[ mingw mswin x64_mingw jruby ]
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
