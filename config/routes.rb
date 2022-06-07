@@ -33,6 +33,7 @@ Rails.application.routes.draw do
       end
       resources :products do
         get :index, on: :member
+        get :history, on: :member
       end
   end
   resources :lists do

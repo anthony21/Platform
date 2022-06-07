@@ -1,0 +1,114 @@
+appended:
+  appends: >
+    ["demographics_basic"]
+  column_mappings: >
+    {
+      "first_name": "0",
+      "last_name": "1",
+      "address": "2",
+      "address_2": "3",
+      "zip": "5",
+      "phone": "6",
+      "email": "7"
+    }
+  list_type: append
+  name: my-ready-list.csv (Appended)
+  original_list: uploaded_ready
+  status: submitted
+  user: admin
+
+auto:
+  name: My Auto List
+  record_count: 500
+  status: submitted
+  list_type: audience
+  audience: auto
+  user: account_manager
+  data_source: auto
+
+business_email:
+  name: My Business Email List
+  record_count: 500
+  status: submitted
+  list_type: audience
+  audience: business_email
+  user: admin
+  data_source: business_email
+  filters: >
+    [
+      ["url_present", ["Y"]],
+      ["or", [["sic_code_2", ["<%= ActiveRecord::FixtureSet.identify(:forestry) %>"]]]],
+      ["executive_name_present", ["Y"]]
+    ]
+
+consumer:
+  name: My Consumer List
+  record_count: 500
+  status: submitted
+  list_type: audience
+  audience: consumer
+  user: admin
+  data_source: consumer
+  geography: >
+    {
+      "counties": ["MA013"],
+      "states": ["MA"]
+    }
+  filters: >
+    [["gender", ["M"]]]
+  omissions: >
+    ["state_countycode"]
+  select_type: 'address_zip'
+  phones: all
+  phone_type: landline_priority
+
+core:
+  name: Core List
+  status: ready
+  user: admin
+  list_type: core
+  core_shipment: acme
+  column_mappings: >
+    {
+      "first_name": "",
+      "last_name": "",
+      "address": "",
+      "address_2": "",
+      "zip": "",
+      "phone": "",
+      "email": ""
+    }
+
+uploaded:
+  name: my-list.csv
+  user: admin
+  list_type: uploaded
+  status: submitted
+  column_mappings: >
+    {
+      "first_name": "0",
+      "last_name": "1",
+      "address": "2",
+      "address_2": "3",
+      "zip": "5",
+      "phone": "6",
+      "email": "7"
+    }
+
+uploaded_ready:
+  name: my-ready-list.csv
+  user: admin
+  list_type: uploaded
+  status: ready
+  record_count: 1000
+  appends:
+  column_mappings: >
+    {
+      "first_name": "0",
+      "last_name": "1",
+      "address": "2",
+      "address_2": "3",
+      "zip": "5",
+      "phone": "6",
+      "email": "7"
+    }

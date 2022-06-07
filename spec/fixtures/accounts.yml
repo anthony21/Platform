@@ -1,0 +1,24 @@
+urban_outlets:
+  name: Urban Outlets
+  urban_outlets: true
+  api_token: uo-api-token
+  invite_token: uo-invite-token
+
+acme:
+  name: Acme Corporation
+  urban_outlets: false
+  api_token: acme-api-token
+  invite_token: acme-invite-token
+  core_account: acme_account
+
+fake_empty_co:
+  name: Fake Empty Co
+  urban_outlets: false
+  api_token: fake-empty-co-api-token
+  invite_token: fake-empty-co-invite-token
+
+empire:
+  name: The Empire
+  urban_outlets: false
+  api_token: the-empire-api-token
+  invite_token: the-empire-invite-token
