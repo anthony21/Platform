@@ -1,0 +1,21 @@
+<div data-hidden-target="element" data-hidden-id="dashboard-ad">
+  <div class="bg-white dark:bg-gray-900 border-t border-b sm:border-r sm:border-l border-gray-200 dark:border-gray-800 sm:rounded-sm relative mt-6">
+    <div
+      class="cursor-pointer absolute right-0 top-0 px-2 mr-2 mt-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-600"
+      data-action="click->hidden#hideElement"
+      data-hidden-target-id="dashboard-ad"
+      >
+      <%= icon name: 'xmark' %>
+    </div>
+
+    <div class="flex items-center">
+      <%= image_tag 'dashboard/database.jpg', class: 'h-64' %>
+
+      <div class="py-6 ml-6">
+        <h2 class="text-xl font-bold">Get a $500 marketing database for free</h2>
+        <p class="mb-4 text-sm">Refer a friend and earn $500 toward your next marketing list.</p>
+        <%= button text: 'Invite a friend', color: :blue, url: '#' %>
+      </div>
+    </div>
+  </div>
+</div>

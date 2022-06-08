@@ -1,0 +1,32 @@
+<%= title t('lists.edit') %>
+
+<div class="max-w-lg">
+  <%= form_with model: [@account, @list].compact do |form| %>
+    <% if @list.uploaded? %>
+      <%= lists_mapping_form name: @name, list: @list %>
+    <% else %>
+      <%= cards_card do %>
+        <%= cards_field do %>
+          <%= forms_field(
+            form: form,
+            field: :name,
+            required: true,
+            label: 'Name',
+            autofocus: true,
+            spellcheck: false
+          ) %>
+        <% end %>
+
+        <div class="mt-6 text-right">
+          <%= button(
+            text: 'Save',
+            type: :submit,
+            icon: 'check',
+            color: 'green',
+            show_loading: true
+          ) %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

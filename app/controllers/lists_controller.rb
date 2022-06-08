@@ -10,6 +10,10 @@ class ListsController < ApplicationController
   before_action :set_list, except: %i(index new create mapping)
 
   def index
+<<<<<<< HEAD
+=======
+    @pagy, @lists = pagy(lists.order(created_at: :desc).search(@search).for_user(@user_filter))
+>>>>>>> origin/main
   end
 
   def show; end

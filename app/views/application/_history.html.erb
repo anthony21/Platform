@@ -1,0 +1,31 @@
+<% if @history.blank? %>
+  <div class="flex items-center justify-center text-gray-400 py-8">
+    <%= t('dashboard.no_activity') %>
+  </div>
+<% else %>
+  <%= tables_table pagy: @pagy, entry_name: 'record' do |table| %>
+    <%= table.header_cell name: t('views.table.user'), classes: 'w-1/4' %>
+    <%= table.header_cell name: t('views.table.action'), classes: 'w-20' %>
+    <%= table.header_cell name: t('views.table.time'), classes: 'w-48' %>
+
+    <% @history.each do |record| %>
+      <%= table.row do |row| %>
+        <%= row.cell classes: 'truncate' do %>
+          <% if record.user.present? %>
+            <%= avatar user: record.user, with_name: true %>
+          <% else %>
+            <span class="text-gray-400">N/A</span>
+          <% end %>
+        <% end %>
+
+        <%= row.cell do %>
+          <%= audit_action_label audit: record %>
+        <% end %>
+
+        <%= row.cell do %>
+          <%= time at: record.created_at %>
+        <% end %>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

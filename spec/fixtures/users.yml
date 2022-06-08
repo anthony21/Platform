@@ -36,7 +36,12 @@ admin:
   features: >
     {
       "account_admin": true,
+<<<<<<< HEAD
       "campaigns": true
+=======
+      "campaigns": true,
+      "ping": true
+>>>>>>> origin/main
     }
 
 user:

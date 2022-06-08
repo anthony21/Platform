@@ -1,2 +1,6 @@
 First Name,Last Name,Address 1,Address 2,State Abbreviation,Zip Code,Phone,Email
+<<<<<<< HEAD
 Michael,Duvneary,200 Goals Av,,CA,00000,,
+=======
+Andrew,Katz,123 Cool Rd,,VT,05452,,
+>>>>>>> origin/main

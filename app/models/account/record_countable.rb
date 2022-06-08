@@ -16,5 +16,11 @@ module Account::RecordCountable
     record_transactions.sum(:record_count)
   end
 
+<<<<<<< HEAD
 
+=======
+  def used_records
+    lists.where(list_type: 'audience').sum(:record_count)
+  end
+>>>>>>> origin/main
 end

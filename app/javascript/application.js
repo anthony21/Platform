@@ -9,7 +9,14 @@ import 'controllers'
 
 Rails.start()
 ActiveStorage.start()
+<<<<<<< HEAD
 LocalTime.start() 
 
 window.Alpine = Alpine
 Alpine.start()
+=======
+LocalTime.start()
+
+window.Alpine = Alpine
+Alpine.start()
+>>>>>>> origin/main

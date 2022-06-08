@@ -9,6 +9,10 @@ class DashboardListComponent < BaseComponent
   def icon_name(item)
     {
       Account => 'house-user',
+<<<<<<< HEAD
+=======
+      Audience => 'screen-users',
+>>>>>>> origin/main
       List => 'address-card',
       Core::Order => 'table-list',
       Core::Invoice => 'file-invoice-dollar'
@@ -18,6 +22,10 @@ class DashboardListComponent < BaseComponent
   def icon_color(item)
     {
       Account => 'orange',
+<<<<<<< HEAD
+=======
+      Audience => 'blue',
+>>>>>>> origin/main
       List => 'green',
       Core::Order => 'teal',
       Core::Invoice => 'indigo'

@@ -1,2 +1,6 @@
 First Name,Last Name,Address 1,Address 2,State Abbreviation,Zip Code,Phone,Email
+<<<<<<< HEAD
 \Michael,Duvenary\,100 Goals Av,,CA,90002,3231110000,and\Duv@test.com
+=======
+\Andrew,Katz\,123 Cool Rd,,VT,05452,8185551111,and\rew@test.com
+>>>>>>> origin/main

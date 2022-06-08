@@ -11,6 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
+<<<<<<< HEAD
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +28,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
   end
 
   create_table "accounts", force: :cascade do |t|
+=======
+  create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -35,7 +39,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.string "api_token"
   end
 
+<<<<<<< HEAD
   create_table "api_requests", force: :cascade do |t|
+=======
+  create_table "api_requests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.string "request_type"
     t.string "body"
     t.integer "result_count", default: 0
@@ -46,7 +54,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.index ["account_id"], name: "index_api_requests_on_account_id"
   end
 
+<<<<<<< HEAD
   create_table "audits", force: :cascade do |t|
+=======
+  create_table "audits", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.integer "auditable_id"
     t.string "auditable_type"
     t.integer "associated_id"
@@ -68,6 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
+<<<<<<< HEAD
   create_table "core_accounts", force: :cascade do |t|
     t.string "company_name", limit: 100
     t.string "first_name", limit: 100
@@ -154,6 +167,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
   end
 
   create_table "lists", force: :cascade do |t|
+=======
+  create_table "lists", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.bigint "user_id"
     t.bigint "data_source_id"
     t.string "name"
@@ -165,6 +181,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.index ["user_id"], name: "index_lists_on_user_id"
   end
 
+<<<<<<< HEAD
   create_table "order_confirmations", force: :cascade do |t|
     t.integer "order_id"
     t.integer "user_id", null: false
@@ -268,6 +285,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
   end
 
   create_table "personas", force: :cascade do |t|
+=======
+  create_table "personas", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.string "name"
     t.text "selects"
     t.text "image_path"
@@ -275,14 +295,22 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< HEAD
   create_table "products", force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.decimal "price"
+=======
+  create_table "products", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.decimal "price", precision: 10
+>>>>>>> origin/main
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< HEAD
   create_table "purchase_order_status_logs", force: :cascade do |t|
     t.integer "po_id"
     t.integer "user_id"
@@ -315,6 +343,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
   end
 
   create_table "record_transactions", force: :cascade do |t|
+=======
+  create_table "record_transactions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.bigint "account_id"
     t.integer "record_count"
     t.datetime "created_at", null: false
@@ -322,6 +353,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.index ["account_id"], name: "index_record_transactions_on_account_id"
   end
 
+<<<<<<< HEAD
   create_table "shipments", force: :cascade do |t|
     t.integer "order_id"
     t.integer "purchase_order_id"
@@ -336,10 +368,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
   end
 
   create_table "system_notices", force: :cascade do |t|
+=======
+  create_table "system_notices", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+<<<<<<< HEAD
   create_table "terms_and_conditions", force: :cascade do |t|
     t.datetime "active_date", precision: nil, null: false
     t.datetime "inactive_date", precision: nil
@@ -350,6 +386,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
   end
 
   create_table "users", force: :cascade do |t|
+=======
+  create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+>>>>>>> origin/main
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -370,6 +409,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+<<<<<<< HEAD
   create_table "vendors", force: :cascade do |t|
     t.integer "company_id", null: false
     t.string "contact_name", limit: 100, null: false
@@ -391,4 +431,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_06_01_162543) do
     t.datetime "updated_at", null: false
   end
 
+=======
+>>>>>>> origin/main
 end
